@@ -2,6 +2,41 @@
 #include <stdlib.h>
 
 #include "ask.h"
+#define max(a, b) ((a) > (b) ? (a) : (b))
+
+int calc_similarity(char* s1, char* s2) {
+    int m = strlen(s1);
+    int n = strlen(s2);
+
+    // 2次元配列を動的に確保する
+    int** dp = (int**)malloc(sizeof(int*) * (m + 1));
+    for(int i = 0; i <= m; i++) {
+        dp[i] = (int*)malloc(sizeof(int) * (n + 1));
+    }
+
+    // LCSを求める
+    for(int i = 0; i <= m; i++) {
+        for(int j = 0; j <= n; j++) {
+            if(i == 0 || j == 0) {
+                dp[i][j] = 0;
+            } else if(s1[i-1] == s2[j-1]) {
+                dp[i][j] = dp[i-1][j-1] + 1;
+            } else {
+                dp[i][j] = max(dp[i-1][j], dp[i][j-1]);
+            }
+        }
+    }
+
+    int lcs = dp[m][n];
+
+    // 2次元配列を解放する
+    for(int i = 0; i <= m; i++) {
+        free(dp[i]);
+    }
+    free(dp);
+
+    return lcs;
+}
 
 int main(int argc, char* argv[]) {
 
@@ -31,11 +66,15 @@ int main(int argc, char* argv[]) {
 
         q = ask(i + 1, argv[3]);
 
-        int ans = randint(1, N+1);
-        fprintf(output_file, "%d\n", ans);
-
-        free(q);
-    }
+        int max_similarity = 0;
+        int max_similarity_index = 0;
+        for(int j = 0; j < N; j++) {
+            int similarity = calc_similarity(q, S[j]);
+            if(similarity > max_similarity) {
+                max_similarity = similarity;
+                max_similarity_index = j;
+            }
+        }
 
     fclose(input_file);
     fclose(output_file);
@@ -45,4 +84,7 @@ int main(int argc, char* argv[]) {
     free(S);
 
     return 0;
+    }
 }
+
+
