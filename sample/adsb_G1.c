@@ -1,41 +1,49 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <limits.h>
 
 #include "ask.h"
 #define max(a, b) ((a) > (b) ? (a) : (b))
 
-int calc_similarity(char* s1, char* s2) {
-    int m = strlen(s1);
-    int n = strlen(s2);
+int min(int a, int b, int c) {
+    int min = a;
+    if (b < min) min = b;
+    if (c < min) min = c;
+    return min;
+}
 
-    // 2次元配列を動的に確保する
-    int** dp = (int**)malloc(sizeof(int*) * (m + 1));
-    for(int i = 0; i <= m; i++) {
-        dp[i] = (int*)malloc(sizeof(int) * (n + 1));
-    }
+int calc_edit_distance(const char* str1, const char* str2) {
+    // str1の文字数をn、str2の文字数をmとする
+    int n = strlen(str1);
+    int m = strlen(str2);
 
-    // LCSを求める
-    for(int i = 0; i <= m; i++) {
-        for(int j = 0; j <= n; j++) {
-            if(i == 0 || j == 0) {
-                dp[i][j] = 0;
-            } else if(s1[i-1] == s2[j-1]) {
-                dp[i][j] = dp[i-1][j-1] + 1;
+    // 配列dを宣言する
+    // d[i][j]は、str1のi文字目から末尾までと、str2のj文字目から末尾までの
+    // 編集距離を表す
+    int d[n + 1][m + 1];
+
+    // 配列dを初期化する
+    for (int i = 0; i <= n; i++) {
+        for (int j = 0; j <= m; j++) {
+            if (i == 0) {
+                // str1が空文字列の場合、str2をすべて挿入する必要がある
+                d[i][j] = j;
+            } else if (j == 0) {
+                // str2が空文字列の場合、str1をすべて削除する必要がある
+                d[i][j] = i;
             } else {
-                dp[i][j] = max(dp[i-1][j], dp[i][j-1]);
+                // str1とstr2の末尾の文字が等しい場合、
+                // str1のi-1文字目から末尾までと、str2のj-1文字目から末尾までの
+                // 編集距離に1を足さずに、そのままd[i][j]とする
+                // 等しくない場合、str1の末尾の文字をstr2の末尾の文字で置き換える必要がある
+                d[i][j] =
+                    min(d[i - 1][j] + 1, d[i][j - 1] + 1,
+                        d[i - 1][j - 1] + str1[i - 1] == str2[j - 1] ? 0 : 1);
             }
         }
     }
-
-    int lcs = dp[m][n];
-
-    // 2次元配列を解放する
-    for(int i = 0; i <= m; i++) {
-        free(dp[i]);
-    }
-    free(dp);
-
-    return lcs;
+    // 編集距離を返す
+    return d[n][m];
 }
 
 int main(int argc, char* argv[]) {
@@ -66,25 +74,24 @@ int main(int argc, char* argv[]) {
 
         q = ask(i + 1, argv[3]);
 
-        int max_similarity = 0;
-        int max_similarity_index = 0;
+        int min_edit_distance = INT_MAX;
+        int min_edit_distance_index = 0;
         for(int j = 0; j < N; j++) {
-            int similarity = calc_similarity(q, S[j]);
-            if(similarity > max_similarity) {
-                max_similarity = similarity;
-                max_similarity_index = j;
+            int edit_distance = calc_edit_distance(q, S[j]);
+            if(edit_distance < min_edit_distance) {
+                min_edit_distance = edit_distance;
+                min_edit_distance_index = j;
             }
         }
-
+        fprintf(output_file, "%d\n", min_edit_distance_index + 1);
+    }
     fclose(input_file);
     fclose(output_file);
+    output_file = fopen(argv[2], "r");
     for(int i = 0; i < N; i++) {
         free(S[i]);
     }
     free(S);
 
     return 0;
-    }
 }
-
-
