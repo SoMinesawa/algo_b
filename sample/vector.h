@@ -26,9 +26,7 @@ vector makeVector(int size) {
 }
 
 // vector に格納されている要素の個数を返す。
-int getVectorSize(vector* v) {
-    return v->tail + 1;
-}
+int getVectorSize(vector* v) { return v->tail + 1; }
 
 // vector で確保されているメモリを開放する
 void freeVector(vector* v) {
@@ -41,16 +39,17 @@ void freeVector(vector* v) {
 // ex) v = {1, 3, 5, 7, 9}; の時、push_back(&v, 11); を呼ぶと、
 //     v = {1, 3, 5, 7, 9, 11}; になる
 void push_back(vector* v, vector_t value) {
-    if(v->tail + 1 < v->capacity) {
+    if (v->tail + 1 < v->capacity) {
         v->dat[++v->tail] = value;
-    } else if(v->capacity == 0) {
+    } else if (v->capacity == 0) {
         v->capacity = 1;
         v->tail = 0;
         v->dat = (vector_t*)calloc(1, sizeof(vector_t));
         v->dat[0] = value;
     } else {
-        vector_t* new_dat = (vector_t*)calloc(v->capacity * 2, sizeof(vector_t));
-        for(int i = 0; i <= v->tail; i++) {
+        vector_t* new_dat =
+            (vector_t*)calloc(v->capacity * 2, sizeof(vector_t));
+        for (int i = 0; i <= v->tail; i++) {
             new_dat[i] = v->dat[i];
         }
         new_dat[++v->tail] = value;

@@ -10,9 +10,9 @@ unsigned int myrand() {
     assert(size != -1);
 
     unsigned int res = 0;
-    for(int i = 0; i < 4; i++) {
+    for (int i = 0; i < 4; i++) {
         unsigned int tmp = 1;
-        for(int j = 0; j < i; j++) tmp *= 256;
+        for (int j = 0; j < i; j++) tmp *= 256;
         tmp *= (unsigned int)buf[i];
         res += tmp;
     }
