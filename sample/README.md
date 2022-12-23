@@ -41,11 +41,6 @@ $ timeout 10 ./run_G1 all/testcase1/idata out.txt all/testcase1/answer
 
 この場合、出力は `out.txt` に出力されます。
 
-CPU時間は以下のコマンドにより表示されるuser+sysの値
-
-```
-$ time ./run_{グループID}
-```
 
 ピークメモリは以下のコマンドにより表示されるMaximum resident set size (kbytes)の値
 
