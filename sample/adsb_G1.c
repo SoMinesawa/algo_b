@@ -5,6 +5,8 @@
 #include "ask.h"
 #define max(a, b) ((a) > (b) ? (a) : (b))
 
+int score = 0;
+
 int min(int a, int b, int c) {
     int min = a;
     if (b < min) min = b;
@@ -60,6 +62,7 @@ int main(int argc, char* argv[]) {
         fscanf(input_file, "%s", q);
 
         q = ask(i + 1, argv[3]);
+        score -= 5; //askを使ったときは5点マイナス
 
         int min_edit_distance = INT_MAX;
         int min_edit_distance_index = 0;
@@ -81,11 +84,33 @@ int main(int argc, char* argv[]) {
     }
     fclose(input_file);
     fclose(output_file);
-    //output_file = fopen(argv[2], "r");
+
     for(int i = 0; i < N; i++) {
         free(S[i]);
     }
     free(S);
+
+    //CPU時間(採点前)
+    clock_t cpu_time = clock();
+    double sec = (double)cpu_time / CLOCKS_PER_SEC;
+    printf("CPU時間(採点前): %fs\n", sec);
+
+    //スコア採点
+    output_file = fopen(argv[2], "r");
+    int out;
+    int answer;
+    char q_tmp[100];
+    fscanf(answer_file, "%d %d %d", &p_ins, &p_sub, &p_del);
+    for(int i = 0; i < N; i++) {
+        fscanf(output_file, "%d", &out);
+        fscanf(answer_file, "%d %s", &answer, q_tmp);
+        if(out == answer){
+            score += 100;
+        }
+    }
+    fclose(output_file);
+    fclose(answer_file);
+    printf("スコア: %d/10000\n", score);
 
     return 0;
 }
