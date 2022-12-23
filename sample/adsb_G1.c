@@ -81,7 +81,7 @@ int main(int argc, char* argv[]) {
     }
     fclose(input_file);
     fclose(output_file);
-    output_file = fopen(argv[2], "r");
+    //output_file = fopen(argv[2], "r");
     for(int i = 0; i < N; i++) {
         free(S[i]);
     }
