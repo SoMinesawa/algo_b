@@ -24,9 +24,9 @@
 性能評価を行う際は以下のようなコマンドでコンパイルし、実行されます。（スライド参照）
 
 ```
-$ gcc adsb_{グループID}.c –o run_{グループID} –lm –O2
+$ gcc adsb_{グループID}.c -o run_{グループID} -lm -O2
 
-$ timeout 10 run_{グループID} (inputファイル名) (outputファイル名) (answerファイル名)
+$ timeout 10 ./run_{グループID} (inputファイル名) (outputファイル名) (answerファイル名)
 ```
 
 例えば本サンプルプログラムだと、以下のようなコマンドで実行することになります。
@@ -34,9 +34,19 @@ $ timeout 10 run_{グループID} (inputファイル名) (outputファイル名)
 例として、`sample` ディレクトリ内に `all` (テストケースが入っているディレクトリ) があり、`sample` ディレクトリ内で 1 つ目のテストケースについてプログラムを実行する場合のコマンドを示します。 
 
 ```
-$ gcc adsb_G1.c –o run_G1 –lm –O2
+$ gcc adsb_G1.c -o run_G1 -lm -O2
 
-$ timeout 10 run_G1 all/testcase1/idata out.txt all/testcase1/answer
+$ timeout 10 ./run_G1 all/testcase1/idata out.txt all/testcase1/answer
 ```
 
 この場合、出力は `out.txt` に出力されます。
+
+CPU時間は以下のコマンドにより表示されるuser+sysの値
+...
+time ./run_{グループID}
+...
+
+ピークメモリは以下のコマンドにより表示されるMaximum resident set size (kbytes)の値
+...
+/usr/bin/time -v ./run_{グループID}
+...
