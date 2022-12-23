@@ -45,9 +45,20 @@ typedef struct {
     Key key;
     union {
         link next;
-        Item item;
+        struct {
+            Item item;
+            link next_leaf;  // 葉ノード同士を接続するためのポインタを追加
+        } leaf;
     } ref;
 } entry;
+
+/*typedef struct {
+    Key key;
+    union {
+        link next;
+        Item item;
+    } ref;
+} entry;*/
 
 struct STnode {
     entry b[ws];
@@ -80,7 +91,7 @@ Item searchR(link h, Key v, int H) {
     int j;
     if (H == 0)
         for (j = 0; j < h->m; j++)
-            if (eq(v, h->b[j].key)) return h->b[j].ref.item;
+            if (eq(v, h->b[j].key)) return h->b[j].ref.leaf.item;
     if (H != 0)
         for (j = 0; j < h->m; j++)
             // ページの全てが同じキーで埋まってしまっている場合に
@@ -98,7 +109,7 @@ link insertR(link h, Item item, int H) {
     entry x;
     link t, u;
     x.key = v;
-    x.ref.item = item;
+    x.ref.leaf.item = item;
     if (H == 0)
         for (j = 0; j < h->m; j++)
             if (less(v, h->b[j].key)) break;
@@ -137,7 +148,7 @@ void STshow(link h, int H) {
     int i;
     if (H == 0) {
         for (i = 0; i < h->m; i++) {
-            ITEMshow(h->b[i].ref.item);
+            ITEMshow(h->b[i].ref.leaf.item);
         }
         printf("| ");
     } else {
@@ -151,6 +162,22 @@ void STshowAll() {
     STshow(head, H);
     printf("\n");
 }
+
+void add_linkR(link h, int H) {
+    int i;
+    if (H == 0) {
+        for (i = 0; i < h->m; i++) {
+            ITEMshow(h->b[i].ref.leaf.item);
+        }
+        printf("| ");
+    } else {
+        for (i = 0; i < h->m; i++) {
+            STshow(h->b[i].ref.next, H - 1);
+        }
+    }
+}
+
+void add_linkAll() { add_link(head, H); }
 
 #define l 9
 #define min(A, B, C) (A > B ? (B > C ? C : B) : (A > C ? C : A))
@@ -171,7 +198,8 @@ void split_and_insert(char* s, int c) {
 
 void add_link() {}
 
-void split_and_search(char* q, int c, int o) {
+// Threshold(閾値)
+Item split_and_search(char** S, char* q, int c, int o, float t) {
     Item item;
     for (int i = 0; i < DATA_LENGTH; i += l) {
         char sub_q[l + 1];
@@ -180,6 +208,13 @@ void split_and_search(char* q, int c, int o) {
         item = STsearch(atoi(sub_q));
         if (item != NULLitem) {
             // join(item, i + o);
+            int edit_dis;
+            char sub_s_i[strlen(q)];  // strlen(q) = ?
+            strncpy(sub_s_i, S[i] - i - o, l);
+            edit_dis = calc_edit_distance(sub_s_i, q);
+            if (edit_dis < t) {
+                return item;
+            }
         }
     }
 }
