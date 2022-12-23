@@ -26,7 +26,7 @@ for file_num in tqdm(range(1000)):
   for i in range(num_queries):
     # Generate query
     query = ''
-    for j in range(random.randint(20, 100)):
+    for j in range(random.randint(20, 100)):  # Change range to random length between 20 and 100
       query += str(random.randint(0, 3))
     queries.append(query)
 
@@ -65,10 +65,10 @@ for file_num in tqdm(range(1000)):
       f.write(f"{base_station}\n")
     for query in queries:
       f.write(f"{query}\n")
-
+    
   # Write answer file
   with open(f'{folder_name}/{answer_file_name}', 'w') as f:
     f.write(f"{error_rates[0]} {error_rates[1]} {error_rates[2]}\n")
-    for i, answer in enumerate(answers):
-      f.write(f"{answer}\n{base_stations[answer]}\n")
+    for i, query in enumerate(queries):
+      f.write(f"{answers[i]} {query}\n")
 
