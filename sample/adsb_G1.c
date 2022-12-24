@@ -5,7 +5,8 @@
 #include "ask.h"
 #define max(a, b) ((a) > (b) ? (a) : (b))
 
-int score = 0;
+int count_correct = 0;
+int count_ask = 0;
 
 int min(int a, int b, int c) {
     int min = a;
@@ -62,7 +63,7 @@ int main(int argc, char* argv[]) {
         fscanf(input_file, "%s", q);
 
         q = ask(i + 1, argv[3]);
-        score -= 5; //askを使ったときは5点マイナス
+        count_ask++; //askを使ったときはcount_askにプラス
 
         int min_edit_distance = INT_MAX;
         int min_edit_distance_index = 0;
@@ -105,12 +106,14 @@ int main(int argc, char* argv[]) {
         fscanf(output_file, "%d", &out);
         fscanf(answer_file, "%d %s", &answer, q_tmp);
         if(out == answer){
-            score += 100;
+            count_correct++;
         }
     }
     fclose(output_file);
     fclose(answer_file);
-    printf("スコア: %d/10000\n", score);
+    printf("スコア: %d/10000\n", count_correct*100 - count_ask*5);
+    printf("正答数: %d/100\n", count_correct);
+    printf("ask回数: %d\n", count_ask);
 
     return 0;
 }
