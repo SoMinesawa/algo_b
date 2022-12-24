@@ -129,8 +129,8 @@ int main(int argc, char* argv[]) {
     fclose(output_file);
     fclose(answer_file);
     printf("スコア: %d/10000\n", count_correct*100 - count_ask*5);
-    printf("正答数: %d/100\n", count_correct);
-    printf("ask回数: %d\n", count_ask);
+    printf("├正答数: %d/100\n", count_correct);
+    printf("└ask回数: %d\n", count_ask);
 
     return 0;
 }
