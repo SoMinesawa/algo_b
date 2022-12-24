@@ -62,8 +62,10 @@ int main(int argc, char* argv[]) {
         char* q = (char*)malloc(sizeof(char) * 200);
         fscanf(input_file, "%s", q);
 
+        /*
         q = ask(i + 1, argv[3]);
         count_ask++; //askを使ったときはcount_askにプラス
+        */
 
         int min_edit_distance = INT_MAX;
         int min_edit_distance_index = 0;
