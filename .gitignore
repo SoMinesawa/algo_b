@@ -52,3 +52,5 @@ Mkfile.old
 dkms.conf
 
 /sample/out.txt
+/sample/info.txt
+/sample/GJS_DEBUG_TOPICS=JS ERROR;JS LOG
