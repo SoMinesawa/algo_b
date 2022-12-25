@@ -67,18 +67,27 @@ struct STnode {
     entry b[ws];
     int m;
 };
-static link head;
-static int H, n;
+
+// static link head;
+// static int H, n;
+
+typedef struct {
+    link head;
+    int H;
+    int n;
+} BPTree;
+
+typedef struct BPTree* link_bp_tree;
 
 link NEW() {
     link x = malloc(sizeof *x);
     x->m = 0;
     return x;
 }
-void STinit(int maxN) {
-    head = NEW();
-    H = 0;
-    n = 0;
+void STinit(BPTree* bp, int maxN) {
+    bp->head = NEW();
+    bp->H = 0;
+    bp->n = 0;
 }
 
 link split(link h) {
@@ -104,7 +113,7 @@ link_leaf searchR(link h, Key v, int H) {
     return NULL;  //?
 }
 
-link_leaf STsearch(Key v) { return searchR(head, v, H); }
+link_leaf STsearch(BPTree bp, Key v) { return searchR(bp.head, v, bp.H); }
 
 link insertR(link h, Item item, int H) {
     int i, j;
@@ -134,17 +143,17 @@ link insertR(link h, Item item, int H) {
         return split(h);
 }
 
-void STinsert(Item item) {
-    link t, u = insertR(head, item, H);
+void STinsert(BPTree* lbp, Item item) {
+    link t, u = insertR(lbp->head, item, lbp->H);
     if (u == NULL) return;
     t = NEW();
     t->m = 2;
-    t->b[0].key = head->b[0].key;
-    t->b[0].ref.next = head;
+    t->b[0].key = lbp->head->b[0].key;
+    t->b[0].ref.next = lbp->head;
     t->b[1].key = u->b[0].key;
     t->b[1].ref.next = u;
-    head = t;
-    H++;
+    lbp->head = t;
+    lbp->H++;
 }
 
 void STshow(link h, int H) {
@@ -161,8 +170,8 @@ void STshow(link h, int H) {
     }
 }
 
-void STshowAll() {
-    STshow(head, H);
+void STshowAll(BPTree bp) {
+    STshow(bp.head, bp.H);
     printf("\n");
 }
 
@@ -184,8 +193,8 @@ void add_linkR(link h, int H) {
     }
 }
 
-void add_linkAll() {
-    add_linkR(head, H);
+void add_linkAll(BPTree* lbp) {
+    add_linkR(lbp->head, lbp->H);
     tmp1->next_leaf = NULL;
 }  //?
 
@@ -206,8 +215,8 @@ void STtest(link_leaf h) {
     }
 }
 
-void STtestAll() {
-    link_leaf ll = STsearch(0);
+void STtestAll(BPTree bp) {
+    link_leaf ll = STsearch(bp, 0);
     STtest(ll);
     printf("\n");
 }
@@ -235,37 +244,41 @@ int calc_edit_dis(char* str1, char* str2) {
 }
 
 // 前処理
-void split_and_insert(char* s, int c) {
+void split_and_insert(BPTree* b, char* s, int c) {
     Item item;
-    for (int i = 0; i < DATA_LENGTH; i += l) {
-        char sub_s[l + 1];
-        strncpy(sub_s, s + i, l);
-        sub_s[l] = '\0';
-        // printf("%s\n", sub_s);
-        key(item) = atoi(sub_s);
-        item.channel = c;
-        item.start = i;
-        STinsert(item);
+    for (int i = 0; i < l; i++) {
+        for (int j = 0; j < DATA_LENGTH; j += l) {
+            char sub_s[l + 1];
+            strncpy(sub_s, s + i + j, l);
+            sub_s[l] = '\0';
+            if (strlen(sub_s) < l) {
+                continue;
+            }
+            // printf("%s\n", sub_s);
+            key(item) = atoi(sub_s);
+            item.channel = c;
+            item.start = j;
+            STinsert(&(b[i]), item);
+        }
     }
 }
 
 // 探索
 // t = Threshold(閾値)
-int split_and_search(char** S, char* q, int t) {
+int split_and_search(BPTree* lbp, char** S, char* q, int t) {
     link_leaf ll;
-    for (int i = 0; i < l - l + 1; i++) {  // offset毎の木を作ってから
+    int edit_dis;
+    for (int i = 0; i < l; i++) {  // offset毎の木から
         for (int j = 0; j < strlen(q); j += l) {
             char sub_q[l + 1];
             strncpy(sub_q, q + j + i, l);
             sub_q[l] = '\0';
-            ll = STsearch(atoi(sub_q));
+            ll = STsearch(lbp[i], atoi(sub_q));
             // printf("sub_q:%s\n", sub_q);
 
             // 完全一致した全ての要素について，編集距離を算出
             while (1) {
                 if (ll != NULL) {
-                    // join(item, j + o);
-                    int edit_dis;
                     char sub_s_i[strlen(q)];
                     int offset = ll->item.start - j - i;
                     if (offset < 0 && ll->next_leaf != NULL &&
@@ -312,23 +325,29 @@ int main(int argc, char* argv[]) {
     int p_ins, p_sub, p_del;
     fscanf(input_file, "%d %d %d", &p_ins, &p_sub, &p_del);
 
-    STinit(N * (DATA_LENGTH / l));
+    BPTree* bp_trees = (BPTree*)malloc(sizeof(BPTree) * l);
+    for (int i = 0; i < l; i++) {
+        STinit(&bp_trees[i], N * (DATA_LENGTH / l));
+    }
 
-    char** S = (char**)malloc(sizeof(char*) * N);
     // S[i] に基地局 i
     // の情報データを格納する (問題では，1<=i<=100だが，本プログラムでは，
     // 簡単のため0<=i<=99として計算を行い，出力時に+1する予定)
+    char** S = (char**)malloc(sizeof(char*) * N);
     for (int i = 0; i < N; i++) {
         S[i] = (char*)malloc(sizeof(char) * (DATA_LENGTH + 1));
         fscanf(input_file, "%s", S[i]);
-        split_and_insert(S[i], i);
-        // printf("%s\n", s_i);
+        split_and_insert(bp_trees, S[i], i);
     }
 
-    add_linkAll();
-    // STshowAll();
-    // STtestAll();
-    // printf("Finished building B-tree\n");
+    for (int i = 0; i < l; i++) {
+        add_linkAll(&bp_trees[i]);
+        // printf("bp_trees[%d]", i);
+        // STshowAll(bp_trees[i]);
+    }
+    // exit(EXIT_FAILURE);
+    //  STtestAll();
+    //  printf("Finished building B-tree\n");
 
     for (int i = 0; i < Q; i++) {
         char* q = (char*)malloc(sizeof(char) * 200);
@@ -337,7 +356,7 @@ int main(int argc, char* argv[]) {
         printf("%d query:%s\n", i + 1, q);
 
         int distance_threshold = (int)((1.0 - 0.729 + 0.05) * strlen(q));
-        int ans = split_and_search(S, q, distance_threshold);
+        int ans = split_and_search(bp_trees, S, q, distance_threshold);
         printf("Ans:%d, distance_threshold:%d\n", ans, distance_threshold);
         if (ans > 100) {
             ans = randint(1, N + 1);  // 苦肉の策　後でどうにかしないと
