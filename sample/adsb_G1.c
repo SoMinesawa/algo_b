@@ -349,6 +349,8 @@ int main(int argc, char* argv[]) {
     //  STtestAll();
     //  printf("Finished building B-tree\n");
 
+    int count_ask = 0;
+
     for (int i = 0; i < Q; i++) {
         char* q = (char*)malloc(sizeof(char) * 200);
         fscanf(input_file, "%s", q);
@@ -374,5 +376,45 @@ int main(int argc, char* argv[]) {
     }
     free(S);
 
+    // 以下結果の評価
+    // CPU時間(採点前)
+    clock_t cpu_time = clock();
+    double sec = (double)cpu_time / CLOCKS_PER_SEC;
+    printf("CPU時間: %fs\n", sec);
+
+    // ピークメモリ
+    system("/usr/bin/time -v ./run_G1 2> info.txt");
+    FILE* info_file;
+    info_file = fopen("info.txt", "r");
+    char c;
+    char tmp[100];
+    for (int i = 0; i < 12; i++) {
+        fgets(tmp, 100, info_file);
+    }
+    printf("ピークメモリ: ");
+    for (int i = 37; tmp[i + 1] != NULL; i++) {
+        printf("%c", tmp[i]);
+    }
+    printf("kbytes\n");
+    fclose(info_file);
+
+    // スコア採点
+    output_file = fopen(argv[2], "r");
+    int count_correct = 0;
+    int out;
+    int answer;
+    fscanf(answer_file, "%d %d %d", &p_ins, &p_sub, &p_del);
+    for (int i = 0; i < N; i++) {
+        fscanf(output_file, "%d", &out);
+        fscanf(answer_file, "%d %s", &answer, tmp);
+        if (out == answer) {
+            count_correct++;
+        }
+    }
+    fclose(output_file);
+    fclose(answer_file);
+    printf("スコア: %d/10000\n", count_correct * 100 - count_ask * 5);
+    printf("├正答数: %d/100\n", count_correct);
+    printf("└ask回数: %d\n", count_ask);
     return 0;
 }
