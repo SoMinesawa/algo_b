@@ -277,7 +277,8 @@ int split_and_search(char** S, char* q, int t) {
                     sub_s_i[strlen(q)] = '\0';
                     edit_dis = calc_edit_dis(sub_s_i, q);
                     if (edit_dis <= t) {
-                        printf("edit_dis_best:%d, ans:%s\n", edit_dis, sub_s_i);
+                        // printf("edit_dis_best:%d, ans:%s\n", edit_dis,
+                        // sub_s_i);
                         return ll->item.channel + 1;
                     }
                 } else {  //(無いとは思うけど)B木内に一致する部分列が一つもないとき
@@ -327,7 +328,7 @@ int main(int argc, char* argv[]) {
     add_linkAll();
     // STshowAll();
     // STtestAll();
-    printf("Finished building B-tree\n");
+    // printf("Finished building B-tree\n");
 
     for (int i = 0; i < Q; i++) {
         char* q = (char*)malloc(sizeof(char) * 200);
@@ -338,8 +339,11 @@ int main(int argc, char* argv[]) {
         int distance_threshold = (int)((1.0 - 0.729 + 0.05) * strlen(q));
         int ans = split_and_search(S, q, distance_threshold);
         printf("Ans:%d, distance_threshold:%d\n", ans, distance_threshold);
-        // int ans = randint(1, N + 1);
-        fprintf(output_file, "%d %s\n", ans + 1, q);
+        if (ans > 100) {
+            ans = randint(1, N + 1);  // 苦肉の策　後でどうにかしないと
+            printf("Failed to search! Return RANDOM!!!\n");
+        }
+        fprintf(output_file, "%d\n", ans);
 
         free(q);
     }
