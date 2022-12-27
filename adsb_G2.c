@@ -38,10 +38,10 @@ void ITEMshow(Item);
 
 void ITEMshow(Item x) { printf("%3d ", key(x)); }
 
-#define M 5001
+#define M 10001
 #define ws (M + 1)
 
-#define l 4  // max = 9
+#define l 3  // max = 9
 #define min(A, B, C) (A > B ? (B > C ? C : B) : (A > C ? C : A))
 
 typedef struct STnode* link;
@@ -301,6 +301,7 @@ int split_and_search(char** S, char* q, int t) {
 
 int main(int argc, char* argv[]) {
     srand((unsigned int)time(NULL));
+    printf("%s\n", argv[1]);
     FILE* input_file = fopen(argv[1], "r");
     FILE* output_file = fopen(argv[2], "w");
     FILE* answer_file = fopen(argv[3], "r");
@@ -312,6 +313,11 @@ int main(int argc, char* argv[]) {
 
     int p_ins, p_sub, p_del;
     fscanf(input_file, "%d %d %d", &p_ins, &p_sub, &p_del);
+    float eps = 0.1;
+    float threshold_ratio =
+        1.0 -
+        (float)((100 - p_ins) * (100 - p_ins) * (100 - p_ins)) / 1000000.0f +
+        eps;
 
     STinit(N * (DATA_LENGTH / l));
 
