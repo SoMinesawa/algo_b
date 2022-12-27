@@ -1,3 +1,5 @@
+// コンパイル: gcc adsb_G2.c -o run_G2 -lm -O2
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -33,8 +35,6 @@ typedef struct {
 Key ITEMrand(void);
 int ITEMscan(Key*);
 void ITEMshow(Item);
-
-int count_ask = 0;
 
 void ITEMshow(Item x) { printf("%3d ", key(x)); }
 
@@ -341,7 +341,7 @@ int main(int argc, char* argv[]) {
         int ans = split_and_search(S, q, distance_threshold);
         printf("Ans:%d, distance_threshold:%d\n", ans, distance_threshold);
         // int ans = randint(1, N + 1);
-        fprintf(output_file, "%d %s\n", ans, q);
+        fprintf(output_file, "%d\n", ans);
 
         free(q);
     }
@@ -352,46 +352,6 @@ int main(int argc, char* argv[]) {
         free(S[i]);
     }
     free(S);
-
-    //CPU時間(採点前)
-    clock_t cpu_time = clock();
-    double sec = (double)cpu_time / CLOCKS_PER_SEC;
-    printf("CPU時間: %fs\n", sec);
-
-    //ピークメモリ
-    system("/usr/bin/time -v ./run_G1 2> info.txt");
-    FILE *info_file;
-    info_file = fopen("info.txt", "r");
-    char c;
-    char tmp[100];
-    for(int i=0; i<12; i++){
-        fgets(tmp, 100, info_file);
-    }
-    printf("ピークメモリ: ");
-    for(int i=37; tmp[i+1]!=NULL; i++){
-        printf("%c",tmp[i]);
-    }
-    printf("kbytes\n");
-    fclose(info_file);
-
-    //スコア採点
-    output_file = fopen(argv[2], "r");
-    int count_correct = 0;
-    int out;
-    int answer;
-    fscanf(answer_file, "%d %d %d", &p_ins, &p_sub, &p_del);
-    for(int i = 0; i < N; i++) {
-        fscanf(output_file, "%d %s", &out, tmp);
-        fscanf(answer_file, "%d %s", &answer, tmp);
-        if(out == answer){
-            count_correct++;
-        }
-    }
-    fclose(output_file);
-    fclose(answer_file);
-    printf("スコア: %d/10000\n", count_correct*100 - count_ask*5);
-    printf("├正答数: %d/100\n", count_correct);
-    printf("└ask回数: %d\n", count_ask);
 
     return 0;
 }
