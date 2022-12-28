@@ -113,7 +113,7 @@ link_leaf searchR(link h, Key v, int H) {
     return NULL;  //?
 }
 
-link_leaf STsearch(BPTree bp, Key v) { return searchR(bp.head, v, bp.H); }
+link_leaf STsearch(BPTree* lbp, Key v) { return searchR(lbp->head, v, lbp->H); }
 
 link insertR(link h, Item item, int H) {
     int i, j;
@@ -211,12 +211,12 @@ void STtest(link_leaf h) {
             }
         }
     } else {
-        printf("h is NULL");
+        printf("h is NULL\n");
     }
 }
 
-void STtestAll(BPTree bp) {
-    link_leaf ll = STsearch(bp, 0);
+void STtestAll(BPTree* lbp) {
+    link_leaf ll = STsearch(lbp, 0);
     STtest(ll);
     printf("\n");
 }
@@ -269,11 +269,12 @@ int split_and_search(BPTree* lbp, char** S, char* q, int t) {
     link_leaf ll;
     int edit_dis;
     for (int i = 0; i < l; i++) {  // offset毎の木から
-        for (int j = 0; j < strlen(q); j += l) {
+        for (int j = 0; i + j + l <= strlen(q); j += l) {
+            // printf("%d, %d\n", j + i, strlen(q));
             char sub_q[l + 1];
             strncpy(sub_q, q + j + i, l);
             sub_q[l] = '\0';
-            ll = STsearch(lbp[i], atoi(sub_q));
+            ll = STsearch(&lbp[i], atoi(sub_q));
             // printf("sub_q:%s\n", sub_q);
 
             // 完全一致した全ての要素について，編集距離を算出
@@ -344,10 +345,11 @@ int main(int argc, char* argv[]) {
         add_linkAll(&bp_trees[i]);
         // printf("bp_trees[%d]", i);
         // STshowAll(bp_trees[i]);
+        // STtestAll(&bp_trees[i]);
     }
     // exit(EXIT_FAILURE);
-    //  STtestAll();
-    //  printf("Finished building B-tree\n");
+    //   STtestAll();
+    //   printf("Finished building B-tree\n");
 
     int count_ask = 0;
 
@@ -375,6 +377,7 @@ int main(int argc, char* argv[]) {
         free(S[i]);
     }
     free(S);
+    free(bp_trees);
 
     // 以下結果の評価
     // CPU時間(採点前)
@@ -386,7 +389,6 @@ int main(int argc, char* argv[]) {
     system("/usr/bin/time -v ./run_G1 2> info.txt");
     FILE* info_file;
     info_file = fopen("info.txt", "r");
-    char c;
     char tmp[100];
     for (int i = 0; i < 12; i++) {
         fgets(tmp, 100, info_file);

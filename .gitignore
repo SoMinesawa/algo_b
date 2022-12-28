@@ -55,3 +55,4 @@ dkms.conf
 tmp*
 adsb_G1
 core
+run.sh
