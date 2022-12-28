@@ -340,7 +340,7 @@ int main(int argc, char* argv[]) {
     for (int i = 0; i < Q; i++) {
         char* q = (char*)malloc(sizeof(char) * 200);
         fscanf(input_file, "%s", q);
-        // q = ask(i + 1, argv[3]);
+        q = ask(i + 1, argv[3]);
         printf("%d query:%s\n", i + 1, q);
 
         int distance_threshold = (int)((1.0 - 0.729 + 0.05) * strlen(q));

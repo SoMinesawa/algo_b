@@ -16,7 +16,7 @@ int main(int argc, char* argv[]){
     char mrss[100];
     
     //timeコマンド実行
-    sprintf(command, "/usr/bin/time -o info.txt -v %s %s %s %s 2> /dev/null 2> ask.txt", argv[1], argv[2],argv[3],argv[4]);
+    sprintf(command, "/usr/bin/time -o info.txt -v %s %s %s %s 2> ask.txt", argv[1], argv[2],argv[3],argv[4]);
     system(command);
     printf("\n");
 
@@ -25,12 +25,12 @@ int main(int argc, char* argv[]){
     for (i = 0; i < 2; i++) {
         fgets(tmp, 100, info_file);
     }
-    for(i=22; tmp[i+1]!=NULL; i++){
+    for(i=22; tmp[i+1]!='\0'; i++){
         user_time[i-22] = tmp[i];
     }
 
     fgets(tmp, 100, info_file);
-    for(i=24; tmp[i+1]!=NULL; i++){
+    for(i=24; tmp[i+1]!='\0'; i++){
         sys_time[i-24] = tmp[i];
     }
     
@@ -55,23 +55,6 @@ int main(int argc, char* argv[]){
     printf("[kB]\n");
 
     //スコア採点
-    //正答数
-    FILE* output_file = fopen(argv[3], "r");
-    FILE* answer_file = fopen(argv[4], "r");
-    int count_correct = 0;
-    int out;
-    int answer;
-    fgets(tmp, 200, answer_file);
-    for (i = 0; i < 100; i++) {
-        fscanf(output_file, "%d", &out);
-        fscanf(answer_file, "%d %s", &answer, tmp);
-        if (out == answer) {
-            count_correct++;
-        }
-    }
-    fclose(output_file);
-    fclose(answer_file);
-
     //ask回数
     char query[4];
     int ask[100];
@@ -80,7 +63,6 @@ int main(int argc, char* argv[]){
     for(i=0; i<100; i++){
         ask[i] = 0;
     }
-
     FILE* ask_file = fopen("ask.txt", "r");
     while(fgets(tmp, 200, ask_file) != NULL){
         if(tmp[0] == 'a'){
@@ -94,18 +76,38 @@ int main(int argc, char* argv[]){
             i++;
             }
             n = atoi(query) - 1;
-            if(ask[n] < 18){
+            if(ask[n] < 18){ //正解時の100ポイントに対するaskによる減点は90ポイントまで
                 ask[n]++;
             }
         }
     }
+    fclose(ask_file);
+
+    //正答数
+    FILE* output_file = fopen(argv[3], "r");
+    FILE* answer_file = fopen(argv[4], "r");
+    int count_correct = 0;
+    int out;
+    int answer;
+    int ask_and_fail = 0;
+    fgets(tmp, 200, answer_file);
+    for (i = 0; i < 100; i++) {
+        fscanf(output_file, "%d", &out);
+        fscanf(answer_file, "%d %s", &answer, tmp);
+        if (out == answer) {
+            count_correct++;
+        }else{
+            ask_and_fail += ask[i]*5; // 不正解時の0ポイントに対するaskによる減点は0ポイントのため、正解したものとして減点したポイントを後で戻す
+        }
+    }
+    fclose(output_file);
+    fclose(answer_file);
 
     for(i=0; i<100; i++){
         lost_score += 5 * ask[i];
     }
-    printf("スコア: %d/10000\n", 100*count_correct - lost_score);
+    printf("スコア: %d/10000\n", 100*count_correct - lost_score + ask_and_fail);
     printf("├正答数: %d/100\n", count_correct);
     printf("└ask回数: %d\n", lost_score/5);
-    fclose(ask_file);
     return 0;
 }
