@@ -47,9 +47,18 @@ $ timeout 10 ./run_G2 all/testcase2/idata out.txt all/testcase2/answer
 $ gcc -o measure measure.c
 ```
 
-プログラムを実行し、CPU時間、ピークメモリ、スコアを表示するコマンドを以下に示す。
+プログラムを実行し、CPU時間、ピークメモリ、スコアを表示するプログラムを実行するコマンドを以下に示す。
 
 ```
 $ ./measure ./run_G2 all/testcase1/idata out.txt all/testcase1/answer
 ```
 
+プログラムをすべてのテストケースに対して実行し、毎回のCPU時間、ピークメモリ、スコアと、平均CPU時間、平均ピークメモリ、合計スコアを表示するプログラムをコンパイルするコマンドを以下に示す。
+```
+$ gcc -o measure_all measure_all.c
+```
+
+プログラムをすべてのテストケースに対して実行し、毎回のCPU時間、ピークメモリ、スコアと、平均CPU時間、平均ピークメモリ、合計スコアを表示するプログラムを実行するコマンドを以下に示す。
+```
+$ ./measure_all run_G2
+```
