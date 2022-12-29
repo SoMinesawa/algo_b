@@ -22,6 +22,7 @@ int main(int argc, char* argv[]){
     int sum_score = 0;
     int atoi_mrss, score;
     
+    FILE *result_file = fopen("measurement_result.txt", "w");
 
     for(number=1;;number++){
         memset(idata_path, '\0', sizeof(idata_path));
@@ -50,7 +51,6 @@ int main(int argc, char* argv[]){
         //timeコマンド実行
         sprintf(command, "/usr/bin/time -o info.txt -v ./%s %s out.txt %s 1> /dev/null 2> ask.txt", argv[1], idata_path, answer_path);
         system(command);
-        printf("\n");
 
         //timeコマンドの出力を取得
         FILE* info_file = fopen("info.txt", "r");
@@ -71,7 +71,8 @@ int main(int argc, char* argv[]){
         }
         fclose(info_file);        
 
-        printf("テストケース%d\n", number);
+        printf("\nテストケース%d\n", number);
+        fprintf(result_file, "\nテストケース%d\n", number);
 
         //CPU時間
         cpu_time = atof(user_time) + atof(sys_time);
@@ -143,18 +144,26 @@ int main(int argc, char* argv[]){
         }
         if(cpu_time > 10.0){
             printf(" CPU時間: %.2f[s](上限越え, 10[s]とする)\n", cpu_time);
+            fprintf(result_file, " CPU時間: %.2f[s](上限越え, 10[s]とする)\n", cpu_time);
             cpu_time = 10.0;
             printf(" ピークメモリ: %d[kB]\n", atoi_mrss);
+            fprintf(result_file, " ピークメモリ: %d[kB]\n", atoi_mrss);
             score = 0;
             printf(" スコア: %d/10000(10秒オーバー)\n", score);
+            fprintf(result_file, " スコア: %d/10000(10秒オーバー)\n", score);
         }else{
             printf(" CPU時間: %.2f[s]\n", cpu_time);
+            fprintf(result_file, " CPU時間: %.2f[s]\n", cpu_time);
             printf(" ピークメモリ: %d[kB]\n", atoi_mrss);
+            fprintf(result_file, " ピークメモリ: %d[kB]\n", atoi_mrss);
             score = 100*count_correct - lost_score + ask_and_fail;
             printf(" スコア: %d/10000\n", score);
+            fprintf(result_file, " スコア: %d/10000\n", score);
         }
         printf(" ├正答数: %d/100\n", count_correct);
         printf(" └ask回数: %d\n", lost_score/5);
+        fprintf(result_file, " ├正答数: %d/100\n", count_correct);
+        fprintf(result_file, " └ask回数: %d\n", lost_score/5);
         sum_score += score;
         sum_cpu_time += cpu_time;
     }
@@ -162,5 +171,10 @@ int main(int argc, char* argv[]){
     printf("平均ピークメモリ: %d[kB]\n", sum_mrss/(number-1));
     printf("合計スコア: %d/%d\n", sum_score, 10000*(number-1));
     printf("合計スコア割合: %.2f%%\n", (double)sum_score/(100*(number-1)));
+    fprintf(result_file, "\n平均CPU時間: %.2f[s]\n", sum_cpu_time/(number-1));
+    fprintf(result_file, "平均ピークメモリ: %d[kB]\n", sum_mrss/(number-1));
+    fprintf(result_file, "合計スコア: %d/%d\n", sum_score, 10000*(number-1));
+    fprintf(result_file, "合計スコア割合: %.2f%%\n", (double)sum_score/(100*(number-1)));
+    fclose(result_file);
     return 0;
 }
