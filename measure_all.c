@@ -75,16 +75,8 @@ int main(int argc, char* argv[]){
 
         //CPU時間
         cpu_time = atof(user_time) + atof(sys_time);
-        if(cpu_time > 10.0){
-            printf(" CPU時間: %.2f[s](上限越え, 10[s]とする)\n", cpu_time);
-            cpu_time = 10.0;
-        }else{
-            printf(" CPU時間: %.2f[s]\n", cpu_time);
-        }
-        sum_cpu_time += cpu_time;
 
         //ピークメモリ
-        printf(" ピークメモリ: ");
         i = 0;
         j = 0;
         while(mrss[i]!='\0'){
@@ -95,7 +87,6 @@ int main(int argc, char* argv[]){
         i++;
         }
         atoi_mrss = atoi(mrss_n);
-        printf("%d[kB]\n", atoi_mrss);
         sum_mrss += atoi_mrss;
 
         //スコア採点
@@ -151,15 +142,21 @@ int main(int argc, char* argv[]){
             lost_score += 5 * ask[i];
         }
         if(cpu_time > 10.0){
+            printf(" CPU時間: %.2f[s](上限越え, 10[s]とする)\n", cpu_time);
+            cpu_time = 10.0;
+            printf(" ピークメモリ: %d[kB]\n", atoi_mrss);
             score = 0;
             printf(" スコア: %d/10000(10秒オーバー)\n", score);
         }else{
+            printf(" CPU時間: %.2f[s]\n", cpu_time);
+            printf(" ピークメモリ: %d[kB]\n", atoi_mrss);
             score = 100*count_correct - lost_score + ask_and_fail;
             printf(" スコア: %d/10000\n", score);
         }
         printf(" ├正答数: %d/100\n", count_correct);
         printf(" └ask回数: %d\n", lost_score/5);
         sum_score += score;
+        sum_cpu_time += cpu_time;
     }
     printf("\n平均CPU時間: %.2f[s]\n", sum_cpu_time/(number-1));
     printf("平均ピークメモリ: %d[kB]\n", sum_mrss/(number-1));
