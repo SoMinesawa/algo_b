@@ -75,7 +75,12 @@ int main(int argc, char* argv[]){
 
         //CPU時間
         cpu_time = atof(user_time) + atof(sys_time);
-        printf(" CPU時間: %.2f[s]\n", cpu_time);
+        if(cpu_time > 10.0){
+            printf(" CPU時間: %.2f[s](上限越え, 10[s]とする)\n", cpu_time);
+            cpu_time = 10.0;
+        }else{
+            printf(" CPU時間: %.2f[s]\n", cpu_time);
+        }
         sum_cpu_time += cpu_time;
 
         //ピークメモリ
@@ -145,8 +150,13 @@ int main(int argc, char* argv[]){
         for(i=0; i<100; i++){
             lost_score += 5 * ask[i];
         }
-        score = 100*count_correct - lost_score + ask_and_fail;
-        printf(" スコア: %d/10000\n", score);
+        if(cpu_time > 10.0){
+            score = 0;
+            printf(" スコア: %d/10000(10秒オーバー)\n", score);
+        }else{
+            score = 100*count_correct - lost_score + ask_and_fail;
+            printf(" スコア: %d/10000\n", score);
+        }
         printf(" ├正答数: %d/100\n", count_correct);
         printf(" └ask回数: %d\n", lost_score/5);
         sum_score += score;

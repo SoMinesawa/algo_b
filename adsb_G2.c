@@ -452,28 +452,15 @@ int main(int argc, char* argv[]) {
     free(S);
     free(bp_trees);
 
+    /*
     // 以下結果の評価
     // CPU時間(採点前)
     clock_t cpu_time = clock();
     double sec = (double)cpu_time / CLOCKS_PER_SEC;
     printf("CPU時間: %fs\n", sec);
 
-    // ピークメモリ
-    system("/usr/bin/time -v ./run_G1 2> info.txt");
-    FILE* info_file;
-    info_file = fopen("info.txt", "r");
-    char tmp[100];
-    for (int i = 0; i < 12; i++) {
-        fgets(tmp, 100, info_file);
-    }
-    printf("ピークメモリ: ");
-    for (int i = 37; tmp[i + 1] != NULL; i++) {
-        printf("%c", tmp[i]);
-    }
-    printf("kbytes\n");
-    fclose(info_file);
-
     // スコア採点
+    char tmp[100];
     output_file = fopen(argv[2], "r");
     int count_correct = 0;
     int out;
@@ -491,5 +478,6 @@ int main(int argc, char* argv[]) {
     printf("スコア: %d/10000\n", count_correct * 100 - count_ask * 5);
     printf("├正答数: %d/100\n", count_correct);
     printf("└ask回数: %d\n", count_ask);
+    */
     return 0;
 }
