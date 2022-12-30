@@ -167,7 +167,8 @@ int main(int argc, char* argv[]){
         sum_score += score;
         sum_cpu_time += cpu_time;
     }
-    printf("\n平均CPU時間: %.2f[s]\n", sum_cpu_time/(number-1));
+    printf("\nテストケース%d個の集計結果\n", number - 1);
+    printf("平均CPU時間: %.2f[s]\n", sum_cpu_time/(number-1));
     printf("平均ピークメモリ: %d[kB]\n", sum_mrss/(number-1));
     printf("合計スコア: %d/%d\n", sum_score, 10000*(number-1));
     printf("合計スコア割合: %.2f%%\n", (double)sum_score/(100*(number-1)));
