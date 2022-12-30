@@ -129,7 +129,7 @@ int search(char** S, char* q, int t) {
                 break; //一致する部分列はもうない
             }
             int offset = p->item.start - i;
-            if (offset >= 0) {
+            if (offset + strlen_q <= DATA_LENGTH && offset >= 0) {
                 char* sub_s = slice(S[p->item.channel], offset, strlen(q));
                 // 位置を合わせた基地局データとクエリとの編集距離を算出
                 edit_dis = calc_edit_dis(sub_s, q);
