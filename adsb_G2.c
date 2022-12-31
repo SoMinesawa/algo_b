@@ -14,6 +14,8 @@
 #include "ask.h"
 
 #define min(A, B, C) (A > B ? (B > C ? C : B) : (A > C ? C : A))
+#define min2(A, B) (A > B ? B : A)
+#define max(A, B) (A > B ? A : B)
 
 typedef struct {
     int channel;
@@ -36,6 +38,14 @@ int power(int x, int y) {
     return a;
 }
 
+double power_di(double x, int y) {
+    double a = 1;
+    for(int i = 0; i < y; i++) {
+        a = a * x;
+    }
+    return a;
+}
+
 link NEW(Item item, link next) {
     link x = malloc(sizeof *x);
     x->item = item;
@@ -45,10 +55,10 @@ link NEW(Item item, link next) {
 
 link *heads, z;
 int l; //分割の長さ
-int M; // 配列のサイズ
+double p5; //長さlの文字列にエラーが少なくとも1つ生じる確率、分割の長さとエラー率によって決まる
 
 void STinit() {
-    M = power(4, l);
+    int M = power(4, l); // 配列のサイズ
     heads = malloc(M*sizeof(link));
     z = NEW(NULLitem, NULL);
     for (int i = 0; i < M; i++){
@@ -68,7 +78,7 @@ int hash(char* str) {
 void STinsert(char* str, int channel, int start) {
     int i = hash(str);
     Item item = {channel, start};
-    heads[i] = NEW(item, heads[i]);
+    heads[hash(str)] = NEW(item, heads[i]);
 }
 
 link STsearch(char* v) {
@@ -113,13 +123,15 @@ void insert(char* S, int ch) {
     }
 }
 
-int search(char** S, char* q, int t) {
+int search(char** S, char* q, int L, double t) {
     link p;
     int edit_dis;
     int min_dis = 100;
     int min_dis_channel = randint(1, N + 1);
-    int strlen_q = strlen(q);
-    for (int i = 0; i <= strlen_q - l; i++) {
+    int allowable = max(1.5*L * t, 1); // パラメータ調整
+    int offset;
+
+    for (int i = 0; i <= L - l; i++) {
         char* sub_q = slice(q, i, l); //クエリからl文字取り出す
         p = STsearch(sub_q); //クエリから取り出したl文字を探索
         // ハッシュ表にある完全一致した基地局データの部分列を順次クエリと同じ範囲に拡張し、
@@ -128,13 +140,14 @@ int search(char** S, char* q, int t) {
             if (p == z) {
                 break; //一致する部分列はもうない
             }
-            int offset = p->item.start - i;
-            if (offset + strlen_q <= DATA_LENGTH && offset >= 0) {
+            offset = p->item.start - i;
+            if (offset + L <= DATA_LENGTH && offset >= 0) {
                 char* sub_s = slice(S[p->item.channel], offset, strlen(q));
                 // 位置を合わせた基地局データとクエリとの編集距離を算出
                 edit_dis = calc_edit_dis(sub_s, q);
                 free(sub_s);
-                if (edit_dis <= t) {
+                if (edit_dis <= allowable) {
+                    // answered[p->item.channel] = 1;
                     return p->item.channel + 1; // 編集距離が閾値以下であればそのときの基地局番号を答えとして返す
                 } else if (min_dis > edit_dis){
                     min_dis = edit_dis; // 編集距離の最小値
@@ -165,7 +178,10 @@ int main(int argc, char* argv[]) {
     fscanf(input_file, "%d %d %d", &p_ins, &p_sub, &p_del);
 
     /** 文字列の分割の長さ*/
-    l = 9;
+    l = 8;
+
+    // 長さlの文字列にエラーが少なくとも1つ生じる確率
+    p5 = 1 - power_di((100.0-p_ins)*(100.0-p_sub)*(100.0-p_del)/1000000, l);
 
     printf("Start costruct hashtable with chaining\n");
     STinit();
@@ -178,15 +194,32 @@ int main(int argc, char* argv[]) {
     }
     printf("Finish costruct hashtable\n");
 
+    double p6; // 正解の基地局が候補に入る確率
+    int L; // クエリの長さ
+
     // ↓↓↓　探索開始
     for (int i = 0; i < Q; i++) {
         char* q = scanf_from_file(input_file, 200);
         // q = ask(i + 1, argv[3]); memo : how to call ask method
         printf("%d query:%s\n", i + 1, q);
 
-        int distance_threshold = (int)((1.0 - 0.729 + 0.05) * strlen(q)); //編集距離の閾値
+        L = strlen(q); // クエリの長さ
 
-        int ans = search(S, q, distance_threshold);
+        // パラメータ調整
+        double distance_threshold = 1.0 - (100.0 - p_ins) * (100.0 - p_sub) * (100.0 - p_del) / 1000000; //編集距離の閾値のエラー率が関係する項
+
+        p6 = 1.0 - power_di(p5, L-l+1); // 正解の基地局が候補に入る確率
+
+        double min_p6;
+
+        for(min_p6 = 0.95; min_p6 > p6; min_p6 -= 0.05){
+            q = ask(i+1, argv[3]); // クエリが短ければask
+            L = strlen(q);
+            p6 = 1.0 - power_di(p5, L-l+1);
+        }
+        
+
+        int ans = search(S, q, L, distance_threshold);
 
         printf("Ans:%d, distance_threshold:%d\n", ans, distance_threshold);
 
