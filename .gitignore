@@ -51,8 +51,14 @@ Module.symvers
 Mkfile.old
 dkms.conf
 
+# Data
+data
+*.csv
+
 # Temporary
 tmp*
 adsb_G1
 core
 run.sh
+info.txt
+tuning_Btree
