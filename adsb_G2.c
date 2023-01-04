@@ -163,9 +163,26 @@ int main(int argc, char* argv[]) {
 
     int p_ins, p_sub, p_del;
     fscanf(input_file, "%d %d %d", &p_ins, &p_sub, &p_del);
+    
+    // 1文字にエラーが生じる確率
+    double p_nerr = (100.0 - p_ins) * (100.0 - p_sub) *(100.0 - p_del) / 1000000;
 
-    /** 文字列の分割の長さ*/
-    l = 9;
+    double a; // 編集距離の閾値を決めるのに使う定数
+
+    /** 文字列の分割の長さl*/
+    if (p_nerr < 0.76){
+        l = 7;
+        a = 0.28;
+    } else if (p_nerr < 0.85) {
+        l = 8;
+        a = 0.3;
+    } else if (p_nerr < 0.93) {
+        l = 9;
+        a = 0.25;
+    } else {
+        l = 10;
+        a = 0.25;
+    }
 
     printf("Start costruct hashtable with chaining\n");
     STinit();
@@ -184,7 +201,7 @@ int main(int argc, char* argv[]) {
         // q = ask(i + 1, argv[3]); memo : how to call ask method
         printf("%d query:%s\n", i + 1, q);
 
-        int distance_threshold = (int)((1.0 - 0.729 + 0.05) * strlen(q)); //編集距離の閾値
+        int distance_threshold = (int)(a * p_nerr * strlen(q)); //編集距離の閾値
 
         int ans = search(S, q, distance_threshold);
 
