@@ -113,7 +113,7 @@ void insert(char* S, int ch) {
     }
 }
 
-int search(char** S, char* q, int t) {
+int search(char** S, char* q, int t, int query_number, char* answer_filename, int ask_count) {
     link p;
     int edit_dis;
     int min_dis = 100;
@@ -145,9 +145,15 @@ int search(char** S, char* q, int t) {
         }
         free(sub_q);
     }
-    // 編集距離が最小値の基地局番号を答えとして返す
-    printf("Return minmal distance channel\n");
-    return min_dis_channel + 1;
+    if (ask_count < 3) {
+        ask_count++;
+        q = ask(query_number + 1, answer_filename);
+        return search(S, q, t, query_number, answer_filename, ask_count);
+    } else {
+        // 編集距離が最小値の基地局番号を答えとして返す
+        printf("Return minmal distance channel\n");
+        return min_dis_channel + 1;
+    }
 }
 
 int main(int argc, char* argv[]) {
@@ -164,7 +170,7 @@ int main(int argc, char* argv[]) {
     int p_ins, p_sub, p_del;
     fscanf(input_file, "%d %d %d", &p_ins, &p_sub, &p_del);
     
-    // 1文字にエラーが生じる確率
+    // 1文字にエラーが生じない確率
     double p_nerr = (100.0 - p_ins) * (100.0 - p_sub) *(100.0 - p_del) / 1000000;
 
     double a; // 編集距離の閾値を決めるのに使う定数
@@ -172,7 +178,7 @@ int main(int argc, char* argv[]) {
     /** 文字列の分割の長さl*/
     if (p_nerr < 0.76){
         l = 7;
-        a = 0.28;
+        a = 0.325; //0.28
     } else if (p_nerr < 0.85) {
         l = 8;
         a = 0.3;
@@ -203,7 +209,7 @@ int main(int argc, char* argv[]) {
 
         int distance_threshold = (int)(a * p_nerr * strlen(q)); //編集距離の閾値
 
-        int ans = search(S, q, distance_threshold);
+        int ans = search(S, q, distance_threshold, i, argv[3], 0);
 
         printf("Ans:%d, distance_threshold:%d\n", ans, distance_threshold);
 
