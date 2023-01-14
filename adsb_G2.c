@@ -1,19 +1,89 @@
-/**
- * @file adsb_G2.c
- * @author So Minesawa, Ide Kohsuke, So Fukuda, Ryosuke Nutaba, Shun Kawai
- * @brief Implementation of an efficient solution method for group assignments
- * using hashtable with chaining
- * @version 0.1
- * @date 2022-12-30
- *
- */
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "ask.h"
 
-#define min(A, B, C) (A > B ? (B > C ? C : B) : (A > C ? C : A))
+// ↓ 編集距離 onp https://github.com/cubicdaiya/onp/tree/master/c
+#ifndef ONP_H
+#define ONP_H
+
+typedef unsigned int uint;
+typedef char onp_sequence_t;
+#define onp_swap(type, val, a, b) type val=a;a=b;b=val;
+#define onp_max(a, b) ((a) > (b) ? (a) : (b))
+#define onp_seq_len(seq) strlen(seq)
+
+typedef struct {
+    onp_sequence_t *a;
+    onp_sequence_t *b;
+    uint m;
+    uint n;
+    int *path;
+    uint editdis;
+} onp_diff_t;
+
+onp_diff_t *onp_alloc_diff (onp_sequence_t *a, onp_sequence_t *b);
+void onp_free_diff (onp_diff_t *diff);
+void onp_compose (onp_diff_t *diff);
+
+#endif // ONP_H
+
+static uint snake (onp_diff_t *diff, int k, int p, int pp);
+static uint snake (onp_diff_t *diff, int k, int p, int pp) {
+    int y = onp_max(p, pp);
+    int x = y - k;
+    while (x < diff->m && y < diff->n && diff->a[x] == diff->b[y]) {
+        ++x;
+        ++y;
+    }
+    return y;
+}
+
+onp_diff_t *onp_alloc_diff (onp_sequence_t *a, onp_sequence_t *b) {
+    onp_diff_t *diff = (onp_diff_t *)malloc(sizeof(onp_diff_t));
+    diff->a = a;
+    diff->b = b;
+    diff->m = onp_seq_len(a);
+    diff->n = onp_seq_len(b);
+    if (diff->m > diff->n) {
+        onp_swap(onp_sequence_t*, seq_tmp, a, b);
+        onp_swap(int, int_tmp, diff->m, diff->n);
+    }
+    diff->editdis = 0;
+    return diff;
+}
+
+void onp_free_diff (onp_diff_t *diff) {
+    free(diff->path);
+    free(diff);
+    diff = NULL;
+}
+
+void onp_compose (onp_diff_t *diff) {
+    int  p      = -1;
+    int  delta  = diff->n - diff->m;
+    uint offset = diff->m + 1;
+    uint size   = diff->m + diff->n + 3;
+    int *fp     = (int *)malloc(sizeof(int) * size);
+    diff->path  = (int *)malloc(sizeof(int) * size);
+    for (int i=0;i<size;++i) {
+        fp[i] = diff->path[i] = -1;
+    }
+    do {
+        ++p;
+        for (int k=-p;k<=delta-1;++k) {
+            fp[k+offset] = snake(diff, k, fp[k-1+offset]+1, fp[k+1+offset]);
+        }
+        for (int k=delta+p;k>=delta+1;--k) {
+            fp[k+offset] = snake(diff, k, fp[k-1+offset]+1, fp[k+1+offset]);
+        }
+        fp[delta+offset] = snake(diff, delta, fp[delta-1+offset]+1,
+                                 fp[delta+1+offset]);
+    } while (fp[delta+offset] != diff->n);
+    diff->editdis = delta + 2 * p;
+    free(fp);
+}
+// ↑ 編集距離 onp
 
 typedef struct {
     int channel;
@@ -75,25 +145,6 @@ link STsearch(char* v) {
     return heads[hash(v)];
 }
 
-int calc_edit_dis(char* str1, char* str2) {
-    int lenstr1 = strlen(str1) + 1;
-    int lenstr2 = strlen(str2) + 1;
-    int d[lenstr1][lenstr2];
-    int i1 = 0, i2 = 0, cost = 0;
-
-    for (; i1 < lenstr1; i1++) d[i1][0] = i1;
-    for (; i2 < lenstr2; i2++) d[0][i2] = i2;
-
-    for (i1 = 1; i1 < lenstr1; i1++) {
-        for (i2 = 1; i2 < lenstr2; i2++) {
-            cost = str1[i1 - 1] == str2[i2 - 1] ? 0 : 1;
-            d[i1][i2] = min(d[i1 - 1][i2] + 1, d[i1][i2 - 1] + 1,
-                            d[i1 - 1][i2 - 1] + cost);
-        }
-    }
-    return d[lenstr1 - 1][lenstr2 - 1];
-}
-
 char* scanf_from_file(FILE* file, int len) {
     char* str = (char*)malloc(sizeof(char) * (len));
     fscanf(file, "%s", str);
@@ -131,8 +182,13 @@ int search(char** S, char* q, int t, int query_number, char* answer_filename, in
             int offset = p->item.start - i;
             if (offset + strlen_q <= DATA_LENGTH && offset >= 0) {
                 char* sub_s = slice(S[p->item.channel], offset, strlen(q));
+
                 // 位置を合わせた基地局データとクエリとの編集距離を算出
-                edit_dis = calc_edit_dis(sub_s, q);
+                onp_diff_t *diff = onp_alloc_diff(sub_s, q);
+                onp_compose(diff);
+                edit_dis = diff->editdis;
+                onp_free_diff(diff);
+
                 free(sub_s);
                 if (edit_dis <= t) {
                     return p->item.channel + 1; // 編集距離が閾値以下であればそのときの基地局番号を答えとして返す
@@ -178,20 +234,16 @@ int main(int argc, char* argv[]) {
     /** 文字列の分割の長さl*/
     if (p_nerr < 0.76){
         l = 7;
-        // a = 0.325 * p_nerr;
-        a = 0.26;
+        a = 0.3;
     } else if (p_nerr < 0.85) {
         l = 8;
-        // a = 0.3 * p_nerr;
-        a = 0.2325;
+        a = 0.28;
     } else if (p_nerr < 0.93) {
         l = 9;
-        // a = 0.25 * p_nerr;
-        a = 0.2125;
+        a = 0.27;
     } else {
         l = 10;
-        // a = 0.25 * p_nerr;
-        a = 0.2;
+        a = 0.25;
     }
 
     printf("Start costruct hashtable with chaining\n");
