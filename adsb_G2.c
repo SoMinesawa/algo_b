@@ -176,21 +176,18 @@ int main(int argc, char* argv[]) {
     double a; // 編集距離の閾値を決めるのに使う定数
 
     /** 文字列の分割の長さl*/
+    // 閾値はa*L
     if (p_nerr < 0.76){
         l = 7;
-        // a = 0.325 * p_nerr;
         a = 0.26;
     } else if (p_nerr < 0.85) {
         l = 8;
-        // a = 0.3 * p_nerr;
         a = 0.2325;
     } else if (p_nerr < 0.93) {
         l = 9;
-        // a = 0.25 * p_nerr;
         a = 0.2125;
     } else {
         l = 10;
-        // a = 0.25 * p_nerr;
         a = 0.2;
     }
 
