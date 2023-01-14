@@ -178,16 +178,20 @@ int main(int argc, char* argv[]) {
     /** 文字列の分割の長さl*/
     if (p_nerr < 0.76){
         l = 7;
-        a = 0.325; //0.28
+        // a = 0.325 * p_nerr;
+        a = 0.26;
     } else if (p_nerr < 0.85) {
         l = 8;
-        a = 0.3;
+        // a = 0.3 * p_nerr;
+        a = 0.2325;
     } else if (p_nerr < 0.93) {
         l = 9;
-        a = 0.25;
+        // a = 0.25 * p_nerr;
+        a = 0.2125;
     } else {
         l = 10;
-        a = 0.25;
+        // a = 0.25 * p_nerr;
+        a = 0.2;
     }
 
     printf("Start costruct hashtable with chaining\n");
@@ -207,7 +211,7 @@ int main(int argc, char* argv[]) {
         // q = ask(i + 1, argv[3]); memo : how to call ask method
         printf("%d query:%s\n", i + 1, q);
 
-        int distance_threshold = (int)(a * p_nerr * strlen(q)); //編集距離の閾値
+        int distance_threshold = (int)(a * strlen(q)); //編集距離の閾値
 
         int ans = search(S, q, distance_threshold, i, argv[3], 0);
 
