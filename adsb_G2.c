@@ -3,7 +3,13 @@
 #include <string.h>
 #include "ask.h"
 
-// ↓ 編集距離 onp https://github.com/cubicdaiya/onp/tree/master/c
+// ↓ 編集距離 参考: https://github.com/cubicdaiya/onp/tree/master/c
+
+/**
+ * The algorithm implemented here is based on "An O(NP) Sequence Comparison Algorithm"
+ * by described by Sun Wu, Udi Manber and Gene Myers
+ */
+
 #ifndef ONP_H
 #define ONP_H
 
@@ -83,7 +89,7 @@ void onp_compose (onp_diff_t *diff) {
     diff->editdis = delta + 2 * p;
     free(fp);
 }
-// ↑ 編集距離 onp
+// ↑ 編集距離
 
 typedef struct {
     int channel;
@@ -201,7 +207,7 @@ int search(char** S, char* q, int t, int query_number, char* answer_filename, in
         }
         free(sub_q);
     }
-    if (ask_count < 3) {
+    if (ask_count < 10) {
         ask_count++;
         q = ask(query_number + 1, answer_filename);
         return search(S, q, t, query_number, answer_filename, ask_count);
