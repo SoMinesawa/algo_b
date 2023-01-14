@@ -3,7 +3,7 @@
 #include <string.h>
 #include "ask.h"
 
-#define MAX_l 11
+#define MAX_l 10
 #define MIN_l 7
 #define min(A, B, C) (A > B ? (B > C ? C : B) : (A > C ? C : A))
 
@@ -38,6 +38,7 @@ link NEW(Item item, link next) {
 link** heads;
 link z;
 double p_nerr;
+double a; // 閾値を決めるときの定数
 
 void STinit() {
     heads = (link**)malloc(sizeof(link*) * MAX_l);
@@ -108,13 +109,13 @@ void insert(int l, char* S, int ch) {
     }
 }
 
-int search(char** S, char* q) {
+int search(char** S, char* q, int query_number, char* answer_filename, int ask_count) {
     link p;
     int edit_dis;
     int min_dis = 100;
     int min_dis_channel = randint(0, N);
     int L = strlen(q);
-    int t = 0.225 * L; // 編集距離の閾値
+    int t = a * L; // 編集距離の閾値
     
     for(int l = MAX_l; l >= MIN_l; l--) {
         for (int i = 0; i <= L - l; i++) {
@@ -142,9 +143,15 @@ int search(char** S, char* q) {
             free(sub_q);
         }
     }
-    // 編集距離が最小値の基地局番号を答えとして返す
-    printf("Return minmal distance channel\n");
-    return min_dis_channel + 1;
+    if (ask_count < 2) {
+        ask_count++;
+        q = ask(query_number + 1, answer_filename);
+        return search(S, q, query_number, answer_filename, ask_count);
+    } else {
+        // 編集距離が最小値の基地局番号を答えとして返す
+        printf("Return minmal distance channel\n");
+        return min_dis_channel + 1;
+    }
 }
 
 int main(int argc, char* argv[]) {
@@ -162,6 +169,16 @@ int main(int argc, char* argv[]) {
     fscanf(input_file, "%d %d %d", &p_ins, &p_sub, &p_del);
 
     p_nerr = (100.0 - p_ins) * (100.0 - p_sub) * (100.0 - p_del) / 1000000;
+
+    if (p_nerr < 0.76) {
+        a = 0.275;
+    } else if (p_nerr < 0.85) {
+        a = 0.25;
+    } else if (p_nerr < 0.93) {
+        a = 0.225;
+    } else {
+        a = 0.2;
+    }
 
     printf("Start costruct hashtable with chaining\n");
     STinit();
@@ -183,7 +200,7 @@ int main(int argc, char* argv[]) {
         // q = ask(i + 1, argv[3]); memo : how to call ask method
         printf("%d query:%s\n", i + 1, q);
 
-        int ans = search(S, q);
+        int ans = search(S, q, i, argv[3], 0);
         fprintf(output_file, "%d\n", ans);
         free(q);
     }
