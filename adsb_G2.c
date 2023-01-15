@@ -246,9 +246,12 @@ int main(int argc, char* argv[]) {
 
     // 編集距離の閾値はa*L
     /** 文字列の分割の長さl*/
-    if (p_nerr < 0.8032){
+    if (p_nerr < 0.7786) {
         l = 10;
         a = 0.3;
+    } else if (p_nerr < 0.819) {
+        l = 10;
+        a = 0.29;
     } else if (p_nerr < 0.8299) {
         l = 10;
         a = 0.28;
@@ -258,9 +261,15 @@ int main(int argc, char* argv[]) {
     } else if (p_nerr < 0.88445) {
         l = 11;
         a = 0.26;
-    } else {
+    } else if (p_nerr < 0.8938) {
+        l = 12;
+        a = 0.25;
+    } else if (p_nerr < 0.9119) {
         l = 12;
         a = 0.24;
+    } else {
+        l = 12;
+        a = 0.23;
     }
 
     printf("Start costruct hashtable with chaining\n");
