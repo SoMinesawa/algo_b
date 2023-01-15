@@ -170,7 +170,7 @@ void insert(char* S, int ch) {
     }
 }
 
-int search(char** S, char* q, int t, int query_number, char* answer_filename, int ask_count) {
+int search(char** S, char* q, int t, int query_number, char* answer_filename, int ask_count, int* previous_answers) {
     link p;
     int edit_dis;
     int min_dis = 100;
@@ -208,9 +208,16 @@ int search(char** S, char* q, int t, int query_number, char* answer_filename, in
         free(sub_q);
     }
     if (ask_count < 10) {
+        // 過去に同じ基地局がmin_dis_channelならそれを答えとする
+        for (int i = 0; i < ask_count; i++) {
+            if (previous_answers[i] == min_dis_channel) {
+                return min_dis_channel + 1;
+            }
+        }
+        previous_answers[ask_count] = min_dis_channel;
         ask_count++;
         q = ask(query_number + 1, answer_filename);
-        return search(S, q, t, query_number, answer_filename, ask_count);
+        return search(S, q, t, query_number, answer_filename, ask_count, previous_answers);
     } else {
         // 編集距離が最小値の基地局番号を答えとして返す
         printf("Return minmal distance channel\n");
@@ -237,7 +244,7 @@ int main(int argc, char* argv[]) {
 
     double a; // 編集距離の閾値を決めるのに使う定数
 
-    // 閾値はa*L
+    // 編集距離の閾値はa*L
     /** 文字列の分割の長さl*/
     if (p_nerr < 0.8032){
         l = 10;
@@ -275,7 +282,8 @@ int main(int argc, char* argv[]) {
 
         int distance_threshold = (int)(a * strlen(q)); //編集距離の閾値
 
-        int ans = search(S, q, distance_threshold, i, argv[3], 0);
+        int previous_answers[10] = {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
+        int ans = search(S, q, distance_threshold, i, argv[3], 0, previous_answers);
 
         printf("Ans:%d, distance_threshold:%d\n", ans, distance_threshold);
 
