@@ -240,19 +240,19 @@ int main(int argc, char* argv[]) {
     // 閾値はa*L
     /** 文字列の分割の長さl*/
     if (p_nerr < 0.8032){
-        l = 8;
+        l = 10;
         a = 0.3;
     } else if (p_nerr < 0.8299) {
-        l = 9;
+        l = 10;
         a = 0.28;
     } else if (p_nerr < 0.8565) {
-        l = 10;
+        l = 11;
         a = 0.27;
     } else if (p_nerr < 0.88445) {
-        l = 10;
+        l = 11;
         a = 0.26;
     } else {
-        l = 11;
+        l = 12;
         a = 0.24;
     }
 
