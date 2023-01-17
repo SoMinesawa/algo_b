@@ -1,0 +1,3 @@
+ins:9, sub:8, del:5
+No.67 is uncorrect. (Your answer: 25, Correct answer: 78 Length: 44 Located from 1165)
+Answered:100, Correct_Answer: 99, Score: 9495, Rate:0.950

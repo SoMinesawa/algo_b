@@ -1,0 +1,6 @@
+ins:5, sub:5, del:4
+No.40 is uncorrect. (Your answer: 35, Correct answer: 28 Length: 25 Located from 4809)
+No.53 is uncorrect. (Your answer: 76, Correct answer: 45 Length: 26 Located from 1761)
+No.57 is uncorrect. (Your answer: 79, Correct answer: 44 Length: 29 Located from 3648)
+No.78 is uncorrect. (Your answer: 47, Correct answer: 79 Length: 26 Located from 2754)
+Answered:100, Correct_Answer: 96, Score: 9480, Rate:0.948

@@ -1,0 +1,2 @@
+ins:5, sub:1, del:10
+Answered:100, Correct_Answer: 100, Score: 9820, Rate:0.982

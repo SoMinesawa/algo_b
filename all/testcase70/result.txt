@@ -1,0 +1,7 @@
+ins:8, sub:1, del:6
+No.14 is uncorrect. (Your answer: 78, Correct answer: 72 Length: 34 Located from 3268)
+No.20 is uncorrect. (Your answer: 3, Correct answer: 63 Length: 27 Located from 3220)
+No.35 is uncorrect. (Your answer: 97, Correct answer: 70 Length: 21 Located from 1206)
+No.65 is uncorrect. (Your answer: 84, Correct answer: 39 Length: 46 Located from 2297)
+No.95 is uncorrect. (Your answer: 84, Correct answer: 55 Length: 27 Located from 3684)
+Answered:100, Correct_Answer: 95, Score: 9370, Rate:0.937

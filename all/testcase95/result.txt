@@ -1,0 +1,4 @@
+ins:5, sub:10, del:1
+No.19 is uncorrect. (Your answer: 71, Correct answer: 21 Length: 25 Located from 1196)
+No.50 is uncorrect. (Your answer: 71, Correct answer: 18 Length: 39 Located from 1144)
+Answered:100, Correct_Answer: 98, Score: 9495, Rate:0.950

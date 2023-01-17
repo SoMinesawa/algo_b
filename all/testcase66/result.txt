@@ -1,0 +1,7 @@
+ins:3, sub:10, del:5
+No.27 is uncorrect. (Your answer: 89, Correct answer: 57 Length: 23 Located from 886)
+No.38 is uncorrect. (Your answer: 96, Correct answer: 74 Length: 25 Located from 4223)
+No.70 is uncorrect. (Your answer: 62, Correct answer: 84 Length: 35 Located from 68)
+No.83 is uncorrect. (Your answer: 71, Correct answer: 80 Length: 21 Located from 20)
+No.92 is uncorrect. (Your answer: 20, Correct answer: 19 Length: 29 Located from 2723)
+Answered:100, Correct_Answer: 95, Score: 9230, Rate:0.923

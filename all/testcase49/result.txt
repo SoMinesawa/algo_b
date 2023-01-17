@@ -1,0 +1,4 @@
+ins:9, sub:10, del:7
+No.24 is uncorrect. (Your answer: 75, Correct answer: 10 Length: 27 Located from 4144)
+No.40 is uncorrect. (Your answer: 97, Correct answer: 29 Length: 21 Located from 2593)
+Answered:100, Correct_Answer: 98, Score: 9105, Rate:0.910

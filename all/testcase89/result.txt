@@ -1,0 +1,3 @@
+ins:3, sub:1, del:3
+No.83 is uncorrect. (Your answer: 43, Correct answer: 6 Length: 22 Located from 672)
+Answered:100, Correct_Answer: 99, Score: 9885, Rate:0.988

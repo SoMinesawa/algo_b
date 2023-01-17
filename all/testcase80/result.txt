@@ -1,0 +1,9 @@
+ins:4, sub:4, del:9
+No.9 is uncorrect. (Your answer: 8, Correct answer: 45 Length: 24 Located from 973)
+No.21 is uncorrect. (Your answer: 95, Correct answer: 3 Length: 28 Located from 2306)
+No.69 is uncorrect. (Your answer: 69, Correct answer: 74 Length: 22 Located from 4701)
+No.75 is uncorrect. (Your answer: 91, Correct answer: 85 Length: 26 Located from 940)
+No.77 is uncorrect. (Your answer: 61, Correct answer: 91 Length: 33 Located from 4875)
+No.79 is uncorrect. (Your answer: 98, Correct answer: 48 Length: 21 Located from 1281)
+No.95 is uncorrect. (Your answer: 47, Correct answer: 20 Length: 21 Located from 4894)
+Answered:100, Correct_Answer: 93, Score: 9075, Rate:0.907

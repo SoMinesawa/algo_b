@@ -1,0 +1,3 @@
+ins:10, sub:3, del:4
+No.30 is uncorrect. (Your answer: 87, Correct answer: 79 Length: 24 Located from 4171)
+Answered:100, Correct_Answer: 99, Score: 9660, Rate:0.966

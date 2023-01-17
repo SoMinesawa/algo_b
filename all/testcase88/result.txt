@@ -1,0 +1,13 @@
+ins:6, sub:8, del:8
+No.8 is uncorrect. (Your answer: 70, Correct answer: 68 Length: 30 Located from 434)
+No.27 is uncorrect. (Your answer: 8, Correct answer: 33 Length: 30 Located from 4777)
+No.43 is uncorrect. (Your answer: 70, Correct answer: 22 Length: 51 Located from 394)
+No.53 is uncorrect. (Your answer: 3, Correct answer: 94 Length: 31 Located from 2529)
+No.54 is uncorrect. (Your answer: 93, Correct answer: 37 Length: 31 Located from 4489)
+No.55 is uncorrect. (Your answer: 92, Correct answer: 15 Length: 20 Located from 3331)
+No.58 is uncorrect. (Your answer: 73, Correct answer: 16 Length: 22 Located from 3318)
+No.62 is uncorrect. (Your answer: 84, Correct answer: 91 Length: 21 Located from 2418)
+No.81 is uncorrect. (Your answer: 66, Correct answer: 8 Length: 20 Located from 880)
+No.83 is uncorrect. (Your answer: 81, Correct answer: 67 Length: 42 Located from 697)
+No.88 is uncorrect. (Your answer: 42, Correct answer: 4 Length: 22 Located from 66)
+Answered:100, Correct_Answer: 89, Score: 8440, Rate:0.844

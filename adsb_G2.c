@@ -217,10 +217,14 @@ int search(char** S, char* q, int t, int query_number, char* answer_filename, in
         previous_answers[ask_count] = min_dis_channel;
         ask_count++;
         q = ask(query_number + 1, answer_filename);
+	if (ask_count == 1) {
+	  printf("\n0 ask, L = %d\n", strlen_q);
+	}
+        printf("%d ask, L = %d\n", ask_count, strlen(q));
         return search(S, q, t, query_number, answer_filename, ask_count, previous_answers);
     } else {
         // 編集距離が最小値の基地局番号を答えとして返す
-        printf("Return minmal distance channel\n");
+        // printf("Return minmal distance channel\n");
         return min_dis_channel + 1;
     }
 }
@@ -272,7 +276,7 @@ int main(int argc, char* argv[]) {
         a = 0.23;
     }
 
-    printf("Start costruct hashtable with chaining\n");
+    // printf("Start costruct hashtable with chaining\n");
     STinit();
     // 基地局のデータをlずつに分割して、それぞれ基地局番号と開始位置をハッシュ表に格納する
     // 基地局番号はここでは0〜99として後から+1する
@@ -281,20 +285,20 @@ int main(int argc, char* argv[]) {
         S[i] = scanf_from_file(input_file, DATA_LENGTH + 1);
         insert(S[i], i);
     }
-    printf("Finish costruct hashtable\n");
+    // printf("Finish costruct hashtable\n");
 
     // ↓↓↓　探索開始
     for (int i = 0; i < Q; i++) {
         char* q = scanf_from_file(input_file, 200);
         // q = ask(i + 1, argv[3]); memo : how to call ask method
-        printf("%d query:%s\n", i + 1, q);
+        // printf("%d query:%s\n", i + 1, q);
 
         int distance_threshold = (int)(a * strlen(q)); //編集距離の閾値
 
         int previous_answers[10] = {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
         int ans = search(S, q, distance_threshold, i, argv[3], 0, previous_answers);
 
-        printf("Ans:%d, distance_threshold:%d\n", ans, distance_threshold);
+        // printf("Ans:%d, distance_threshold:%d\n", ans, distance_threshold);
 
         fprintf(output_file, "%d\n", ans);
         free(q);

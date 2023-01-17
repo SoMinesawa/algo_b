@@ -1,0 +1,6 @@
+ins:1, sub:9, del:7
+No.27 is uncorrect. (Your answer: 53, Correct answer: 46 Length: 20 Located from 4902)
+No.61 is uncorrect. (Your answer: 20, Correct answer: 92 Length: 21 Located from 1892)
+No.63 is uncorrect. (Your answer: 43, Correct answer: 41 Length: 46 Located from 3366)
+No.82 is uncorrect. (Your answer: 23, Correct answer: 85 Length: 23 Located from 641)
+Answered:100, Correct_Answer: 96, Score: 9285, Rate:0.928

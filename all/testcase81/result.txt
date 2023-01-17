@@ -1,0 +1,3 @@
+ins:10, sub:1, del:3
+No.5 is uncorrect. (Your answer: 68, Correct answer: 22 Length: 31 Located from 4884)
+Answered:100, Correct_Answer: 99, Score: 9700, Rate:0.970

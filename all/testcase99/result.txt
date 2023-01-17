@@ -1,0 +1,5 @@
+ins:1, sub:9, del:7
+No.76 is uncorrect. (Your answer: 75, Correct answer: 18 Length: 20 Located from 3248)
+No.83 is uncorrect. (Your answer: 48, Correct answer: 70 Length: 25 Located from 3451)
+No.84 is uncorrect. (Your answer: 55, Correct answer: 94 Length: 26 Located from 4368)
+Answered:100, Correct_Answer: 97, Score: 9345, Rate:0.934

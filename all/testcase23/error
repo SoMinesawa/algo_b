@@ -1,0 +1,76 @@
+ask from query_id = 1
+ask from query_id = 3
+ask from query_id = 4
+ask from query_id = 7
+ask from query_id = 11
+ask from query_id = 11
+ask from query_id = 11
+ask from query_id = 17
+ask from query_id = 17
+ask from query_id = 18
+ask from query_id = 19
+ask from query_id = 19
+ask from query_id = 24
+ask from query_id = 28
+ask from query_id = 28
+ask from query_id = 29
+ask from query_id = 31
+ask from query_id = 38
+ask from query_id = 40
+ask from query_id = 41
+ask from query_id = 41
+ask from query_id = 45
+ask from query_id = 47
+ask from query_id = 48
+ask from query_id = 48
+ask from query_id = 48
+ask from query_id = 48
+ask from query_id = 53
+ask from query_id = 53
+ask from query_id = 55
+ask from query_id = 56
+ask from query_id = 57
+ask from query_id = 62
+ask from query_id = 64
+ask from query_id = 65
+ask from query_id = 67
+ask from query_id = 67
+ask from query_id = 68
+ask from query_id = 69
+ask from query_id = 72
+ask from query_id = 76
+ask from query_id = 77
+ask from query_id = 78
+ask from query_id = 84
+ask from query_id = 84
+ask from query_id = 84
+ask from query_id = 84
+ask from query_id = 84
+ask from query_id = 89
+ask from query_id = 89
+ask from query_id = 92
+ask from query_id = 97
+ask from query_id = 98
+	Command being timed: "./run_G2 all/testcase23/idata all/testcase23/out.txt all/testcase23/answer"
+	User time (seconds): 0.07
+	System time (seconds): 0.01
+	Percent of CPU this job got: 98%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.08
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 66136
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 8588
+	Voluntary context switches: 1
+	Involuntary context switches: 1
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 16
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0

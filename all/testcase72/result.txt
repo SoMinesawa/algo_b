@@ -1,0 +1,4 @@
+ins:2, sub:6, del:4
+No.60 is uncorrect. (Your answer: 26, Correct answer: 13 Length: 37 Located from 2062)
+No.94 is uncorrect. (Your answer: 91, Correct answer: 44 Length: 22 Located from 2779)
+Answered:100, Correct_Answer: 98, Score: 9730, Rate:0.973

@@ -1,0 +1,5 @@
+ins:10, sub:9, del:10
+No.31 is uncorrect. (Your answer: 52, Correct answer: 69 Length: 24 Located from 1256)
+No.53 is uncorrect. (Your answer: 68, Correct answer: 54 Length: 28 Located from 3557)
+No.90 is uncorrect. (Your answer: 75, Correct answer: 91 Length: 20 Located from 338)
+Answered:100, Correct_Answer: 97, Score: 8920, Rate:0.892

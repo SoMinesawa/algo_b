@@ -1,0 +1,4 @@
+ins:6, sub:1, del:3
+No.44 is uncorrect. (Your answer: 95, Correct answer: 87 Length: 20 Located from 2788)
+No.78 is uncorrect. (Your answer: 75, Correct answer: 65 Length: 30 Located from 3802)
+Answered:100, Correct_Answer: 98, Score: 9700, Rate:0.970

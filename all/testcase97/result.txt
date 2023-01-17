@@ -1,0 +1,3 @@
+ins:1, sub:5, del:7
+No.28 is uncorrect. (Your answer: 33, Correct answer: 30 Length: 24 Located from 1218)
+Answered:100, Correct_Answer: 99, Score: 9700, Rate:0.970

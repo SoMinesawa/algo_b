@@ -1,0 +1,126 @@
+ask from query_id = 1
+ask from query_id = 1
+ask from query_id = 2
+ask from query_id = 2
+ask from query_id = 2
+ask from query_id = 5
+ask from query_id = 5
+ask from query_id = 6
+ask from query_id = 8
+ask from query_id = 8
+ask from query_id = 8
+ask from query_id = 8
+ask from query_id = 8
+ask from query_id = 9
+ask from query_id = 9
+ask from query_id = 11
+ask from query_id = 12
+ask from query_id = 14
+ask from query_id = 15
+ask from query_id = 15
+ask from query_id = 16
+ask from query_id = 17
+ask from query_id = 18
+ask from query_id = 19
+ask from query_id = 19
+ask from query_id = 19
+ask from query_id = 19
+ask from query_id = 21
+ask from query_id = 21
+ask from query_id = 22
+ask from query_id = 22
+ask from query_id = 25
+ask from query_id = 28
+ask from query_id = 28
+ask from query_id = 29
+ask from query_id = 29
+ask from query_id = 29
+ask from query_id = 29
+ask from query_id = 29
+ask from query_id = 30
+ask from query_id = 30
+ask from query_id = 31
+ask from query_id = 31
+ask from query_id = 32
+ask from query_id = 35
+ask from query_id = 36
+ask from query_id = 36
+ask from query_id = 36
+ask from query_id = 36
+ask from query_id = 37
+ask from query_id = 38
+ask from query_id = 40
+ask from query_id = 43
+ask from query_id = 46
+ask from query_id = 46
+ask from query_id = 47
+ask from query_id = 47
+ask from query_id = 48
+ask from query_id = 50
+ask from query_id = 51
+ask from query_id = 53
+ask from query_id = 57
+ask from query_id = 60
+ask from query_id = 61
+ask from query_id = 62
+ask from query_id = 64
+ask from query_id = 65
+ask from query_id = 65
+ask from query_id = 66
+ask from query_id = 66
+ask from query_id = 66
+ask from query_id = 67
+ask from query_id = 67
+ask from query_id = 68
+ask from query_id = 69
+ask from query_id = 71
+ask from query_id = 73
+ask from query_id = 75
+ask from query_id = 75
+ask from query_id = 76
+ask from query_id = 79
+ask from query_id = 80
+ask from query_id = 80
+ask from query_id = 80
+ask from query_id = 80
+ask from query_id = 81
+ask from query_id = 81
+ask from query_id = 82
+ask from query_id = 84
+ask from query_id = 84
+ask from query_id = 84
+ask from query_id = 86
+ask from query_id = 87
+ask from query_id = 88
+ask from query_id = 88
+ask from query_id = 89
+ask from query_id = 91
+ask from query_id = 92
+ask from query_id = 93
+ask from query_id = 93
+ask from query_id = 93
+ask from query_id = 96
+ask from query_id = 100
+	Command being timed: "./run_G2 all/testcase75/idata all/testcase75/out.txt all/testcase75/answer"
+	User time (seconds): 0.32
+	System time (seconds): 0.02
+	Percent of CPU this job got: 100%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.34
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 41960
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 8640
+	Voluntary context switches: 1
+	Involuntary context switches: 4
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 16
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0

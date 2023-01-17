@@ -1,0 +1,9 @@
+ins:1, sub:7, del:10
+No.16 is uncorrect. (Your answer: 94, Correct answer: 91 Length: 36 Located from 1558)
+No.32 is uncorrect. (Your answer: 75, Correct answer: 91 Length: 24 Located from 1647)
+No.33 is uncorrect. (Your answer: 89, Correct answer: 91 Length: 30 Located from 3821)
+No.44 is uncorrect. (Your answer: 32, Correct answer: 5 Length: 24 Located from 326)
+No.53 is uncorrect. (Your answer: 82, Correct answer: 91 Length: 24 Located from 1979)
+No.66 is uncorrect. (Your answer: 20, Correct answer: 63 Length: 36 Located from 4196)
+No.87 is uncorrect. (Your answer: 53, Correct answer: 3 Length: 23 Located from 2906)
+Answered:100, Correct_Answer: 93, Score: 9040, Rate:0.904

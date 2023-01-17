@@ -1,0 +1,4 @@
+ins:7, sub:3, del:6
+No.30 is uncorrect. (Your answer: 98, Correct answer: 39 Length: 21 Located from 1946)
+No.31 is uncorrect. (Your answer: 72, Correct answer: 90 Length: 27 Located from 2936)
+Answered:100, Correct_Answer: 98, Score: 9680, Rate:0.968

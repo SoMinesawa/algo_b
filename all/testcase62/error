@@ -1,0 +1,80 @@
+ask from query_id = 4
+ask from query_id = 6
+ask from query_id = 6
+ask from query_id = 6
+ask from query_id = 9
+ask from query_id = 9
+ask from query_id = 10
+ask from query_id = 12
+ask from query_id = 13
+ask from query_id = 19
+ask from query_id = 21
+ask from query_id = 27
+ask from query_id = 29
+ask from query_id = 30
+ask from query_id = 32
+ask from query_id = 34
+ask from query_id = 35
+ask from query_id = 36
+ask from query_id = 38
+ask from query_id = 39
+ask from query_id = 41
+ask from query_id = 42
+ask from query_id = 46
+ask from query_id = 47
+ask from query_id = 48
+ask from query_id = 49
+ask from query_id = 50
+ask from query_id = 51
+ask from query_id = 51
+ask from query_id = 52
+ask from query_id = 55
+ask from query_id = 56
+ask from query_id = 60
+ask from query_id = 61
+ask from query_id = 61
+ask from query_id = 62
+ask from query_id = 64
+ask from query_id = 69
+ask from query_id = 70
+ask from query_id = 73
+ask from query_id = 73
+ask from query_id = 73
+ask from query_id = 73
+ask from query_id = 73
+ask from query_id = 75
+ask from query_id = 83
+ask from query_id = 84
+ask from query_id = 85
+ask from query_id = 86
+ask from query_id = 87
+ask from query_id = 90
+ask from query_id = 91
+ask from query_id = 92
+ask from query_id = 97
+ask from query_id = 97
+ask from query_id = 98
+ask from query_id = 99
+	Command being timed: "./run_G2 all/testcase62/idata all/testcase62/out.txt all/testcase62/answer"
+	User time (seconds): 0.27
+	System time (seconds): 0.03
+	Percent of CPU this job got: 100%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.30
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 41668
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 8584
+	Voluntary context switches: 1
+	Involuntary context switches: 4
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 16
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
