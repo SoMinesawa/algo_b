@@ -1,4 +1,4 @@
 ins:3, sub:8, del:10
-No.34 is uncorrect. (Your answer: 42, Correct answer: 93 Length: 28 Located from 2436)
-No.41 is uncorrect. (Your answer: 83, Correct answer: 84 Length: 21 Located from 4112)
-Answered:100, Correct_Answer: 98, Score: 9380, Rate:0.938
+No.54 is uncorrect. (Your answer: 24, Correct answer: 47 Length: 71 Located from 2014)
+No.87 is uncorrect. (Your answer: 56, Correct answer: 59 Length: 31 Located from 2318)
+Answered:100, Correct_Answer: 98, Score: 9320, Rate:0.932

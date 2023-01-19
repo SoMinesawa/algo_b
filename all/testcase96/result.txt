@@ -1,3 +1,5 @@
 ins:10, sub:1, del:1
+No.15 is uncorrect. (Your answer: 38, Correct answer: 86 Length: 28 Located from 3503)
+No.19 is uncorrect. (Your answer: 88, Correct answer: 76 Length: 23 Located from 2955)
 No.79 is uncorrect. (Your answer: 11, Correct answer: 9 Length: 26 Located from 553)
-Answered:100, Correct_Answer: 99, Score: 9765, Rate:0.977
+Answered:100, Correct_Answer: 97, Score: 9600, Rate:0.960

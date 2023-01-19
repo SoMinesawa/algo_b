@@ -99,25 +99,16 @@ int main(int argc, char* argv[]){
         for(i=0; i<100; i++){
             ask[i] = 0;
         }
+
         FILE* ask_file = fopen("ask.txt", "r");
-        while(fgets(tmp, 200, ask_file) != NULL){
-            if(tmp[0] == 'a'){
-                i = 0;
-                j = 0;
-                while(tmp[i]!='\0'){
-                    if(tmp[i]>='0' && tmp[i]<='9'){
-                        query[j] = tmp[i];
-                        j++;
-                    }
-                i++;
-                }
-                n = atoi(query) - 1;
-                if(ask[n] < 18){ //正解時の100ポイントに対するaskによる減点は90ポイントまで
-                    ask[n]++;
-                }
+
+        int ask_query_number;
+        while (fscanf(ask_file, "ask from query_id = %d\n", &ask_query_number) != EOF) {
+            n = ask_query_number - 1;
+            if (ask[n] < 18) {
+                ask[n]++;
             }
         }
-        fclose(ask_file);
 
         //正答数
         FILE* output_file = fopen("out.txt", "r");

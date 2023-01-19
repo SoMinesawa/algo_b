@@ -1,4 +1,6 @@
 ins:7, sub:3, del:6
-No.30 is uncorrect. (Your answer: 98, Correct answer: 39 Length: 21 Located from 1946)
-No.31 is uncorrect. (Your answer: 72, Correct answer: 90 Length: 27 Located from 2936)
-Answered:100, Correct_Answer: 98, Score: 9680, Rate:0.968
+No.30 is uncorrect. (Your answer: 36, Correct answer: 39 Length: 21 Located from 1946)
+No.31 is uncorrect. (Your answer: 91, Correct answer: 90 Length: 27 Located from 2936)
+No.38 is uncorrect. (Your answer: 40, Correct answer: 97 Length: 57 Located from 2183)
+No.66 is uncorrect. (Your answer: 98, Correct answer: 65 Length: 23 Located from 195)
+Answered:100, Correct_Answer: 96, Score: 9490, Rate:0.949

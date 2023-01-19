@@ -1,4 +1,5 @@
 ask from query_id = 1
+ask from query_id = 1
 ask from query_id = 2
 ask from query_id = 6
 ask from query_id = 7
@@ -11,17 +12,15 @@ ask from query_id = 16
 ask from query_id = 17
 ask from query_id = 19
 ask from query_id = 19
-ask from query_id = 19
+ask from query_id = 22
+ask from query_id = 22
 ask from query_id = 22
 ask from query_id = 22
 ask from query_id = 22
 ask from query_id = 24
+ask from query_id = 24
 ask from query_id = 26
 ask from query_id = 28
-ask from query_id = 29
-ask from query_id = 29
-ask from query_id = 29
-ask from query_id = 29
 ask from query_id = 29
 ask from query_id = 31
 ask from query_id = 34
@@ -32,31 +31,32 @@ ask from query_id = 41
 ask from query_id = 48
 ask from query_id = 52
 ask from query_id = 54
-ask from query_id = 54
-ask from query_id = 54
 ask from query_id = 58
 ask from query_id = 59
+ask from query_id = 59
 ask from query_id = 61
-ask from query_id = 62
+ask from query_id = 61
 ask from query_id = 62
 ask from query_id = 62
 ask from query_id = 63
 ask from query_id = 66
 ask from query_id = 67
 ask from query_id = 74
-ask from query_id = 77
+ask from query_id = 74
 ask from query_id = 77
 ask from query_id = 77
 ask from query_id = 78
 ask from query_id = 83
 ask from query_id = 83
+ask from query_id = 83
+ask from query_id = 83
+ask from query_id = 83
 ask from query_id = 85
 ask from query_id = 86
 ask from query_id = 87
-ask from query_id = 87
-ask from query_id = 88
 ask from query_id = 88
 ask from query_id = 90
+ask from query_id = 91
 ask from query_id = 91
 ask from query_id = 92
 ask from query_id = 93
@@ -64,10 +64,10 @@ ask from query_id = 94
 ask from query_id = 95
 ask from query_id = 96
 	Command being timed: "./run_G2 all/testcase74/idata all/testcase74/out.txt all/testcase74/answer"
-	User time (seconds): 0.11
-	System time (seconds): 0.02
-	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.13
+	User time (seconds): 0.15
+	System time (seconds): 0.00
+	Percent of CPU this job got: 100%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.15
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
@@ -77,7 +77,7 @@ ask from query_id = 96
 	Major (requiring I/O) page faults: 0
 	Minor (reclaiming a frame) page faults: 8605
 	Voluntary context switches: 1
-	Involuntary context switches: 0
+	Involuntary context switches: 1
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 16

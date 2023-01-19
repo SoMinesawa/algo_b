@@ -1,4 +1,4 @@
 ins:5, sub:9, del:1
 No.17 is uncorrect. (Your answer: 2, Correct answer: 95 Length: 24 Located from 227)
 No.98 is uncorrect. (Your answer: 88, Correct answer: 21 Length: 24 Located from 2917)
-Answered:100, Correct_Answer: 98, Score: 9540, Rate:0.954
+Answered:100, Correct_Answer: 98, Score: 9535, Rate:0.953

@@ -1,3 +1,4 @@
 ins:9, sub:8, del:5
-No.67 is uncorrect. (Your answer: 25, Correct answer: 78 Length: 44 Located from 1165)
-Answered:100, Correct_Answer: 99, Score: 9495, Rate:0.950
+No.62 is uncorrect. (Your answer: 55, Correct answer: 56 Length: 31 Located from 1812)
+No.78 is uncorrect. (Your answer: 42, Correct answer: 79 Length: 22 Located from 3987)
+Answered:100, Correct_Answer: 98, Score: 9375, Rate:0.938

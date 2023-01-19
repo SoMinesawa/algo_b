@@ -1,4 +1,3 @@
 ins:4, sub:4, del:3
 No.8 is uncorrect. (Your answer: 33, Correct answer: 26 Length: 21 Located from 986)
-No.78 is uncorrect. (Your answer: 77, Correct answer: 56 Length: 21 Located from 3357)
-Answered:100, Correct_Answer: 98, Score: 9655, Rate:0.966
+Answered:100, Correct_Answer: 99, Score: 9760, Rate:0.976

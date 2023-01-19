@@ -1,4 +1,4 @@
 ins:3, sub:4, del:1
 No.43 is uncorrect. (Your answer: 20, Correct answer: 70 Length: 36 Located from 4410)
 No.47 is uncorrect. (Your answer: 58, Correct answer: 51 Length: 36 Located from 4011)
-Answered:100, Correct_Answer: 98, Score: 9745, Rate:0.975
+Answered:100, Correct_Answer: 98, Score: 9750, Rate:0.975

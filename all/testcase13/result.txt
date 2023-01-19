@@ -1,2 +1,3 @@
 ins:9, sub:5, del:7
-Answered:100, Correct_Answer: 100, Score: 9685, Rate:0.968
+No.93 is uncorrect. (Your answer: 48, Correct answer: 3 Length: 20 Located from 2492)
+Answered:100, Correct_Answer: 99, Score: 9570, Rate:0.957

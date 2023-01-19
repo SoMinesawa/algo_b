@@ -1,3 +1,2 @@
 ins:9, sub:5, del:7
-No.3 is uncorrect. (Your answer: 20, Correct answer: 97 Length: 20 Located from 519)
-Answered:100, Correct_Answer: 99, Score: 9585, Rate:0.958
+Answered:100, Correct_Answer: 100, Score: 9690, Rate:0.969

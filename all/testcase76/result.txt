@@ -4,4 +4,4 @@ No.41 is uncorrect. (Your answer: 75, Correct answer: 1 Length: 24 Located from 
 No.58 is uncorrect. (Your answer: 97, Correct answer: 48 Length: 22 Located from 2878)
 No.94 is uncorrect. (Your answer: 14, Correct answer: 51 Length: 23 Located from 3342)
 No.95 is uncorrect. (Your answer: 97, Correct answer: 1 Length: 27 Located from 2811)
-Answered:100, Correct_Answer: 95, Score: 9470, Rate:0.947
+Answered:100, Correct_Answer: 95, Score: 9465, Rate:0.947

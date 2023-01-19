@@ -1,5 +1,6 @@
 ins:10, sub:9, del:10
-No.31 is uncorrect. (Your answer: 52, Correct answer: 69 Length: 24 Located from 1256)
-No.53 is uncorrect. (Your answer: 68, Correct answer: 54 Length: 28 Located from 3557)
-No.90 is uncorrect. (Your answer: 75, Correct answer: 91 Length: 20 Located from 338)
-Answered:100, Correct_Answer: 97, Score: 8920, Rate:0.892
+No.13 is uncorrect. (Your answer: 62, Correct answer: 84 Length: 40 Located from 3649)
+No.31 is uncorrect. (Your answer: 65, Correct answer: 69 Length: 24 Located from 1256)
+No.90 is uncorrect. (Your answer: 21, Correct answer: 91 Length: 20 Located from 338)
+No.99 is uncorrect. (Your answer: 74, Correct answer: 48 Length: 30 Located from 3043)
+Answered:100, Correct_Answer: 96, Score: 8800, Rate:0.880

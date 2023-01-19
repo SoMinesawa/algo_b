@@ -1,10 +1,10 @@
 ins:9, sub:6, del:9
-No.9 is uncorrect. (Your answer: 54, Correct answer: 39 Length: 23 Located from 1848)
 No.14 is uncorrect. (Your answer: 8, Correct answer: 60 Length: 25 Located from 3895)
-No.25 is uncorrect. (Your answer: 35, Correct answer: 16 Length: 42 Located from 799)
-No.57 is uncorrect. (Your answer: 19, Correct answer: 69 Length: 29 Located from 3796)
-No.68 is uncorrect. (Your answer: 62, Correct answer: 56 Length: 50 Located from 2981)
+No.25 is uncorrect. (Your answer: 8, Correct answer: 16 Length: 42 Located from 799)
+No.36 is uncorrect. (Your answer: 93, Correct answer: 10 Length: 25 Located from 2981)
+No.50 is uncorrect. (Your answer: 99, Correct answer: 5 Length: 28 Located from 1762)
+No.57 is uncorrect. (Your answer: 78, Correct answer: 69 Length: 29 Located from 3796)
 No.89 is uncorrect. (Your answer: 42, Correct answer: 36 Length: 33 Located from 1260)
-No.94 is uncorrect. (Your answer: 57, Correct answer: 39 Length: 24 Located from 3890)
+No.94 is uncorrect. (Your answer: 27, Correct answer: 39 Length: 24 Located from 3890)
 No.98 is uncorrect. (Your answer: 88, Correct answer: 11 Length: 23 Located from 2907)
-Answered:100, Correct_Answer: 92, Score: 8855, Rate:0.885
+Answered:100, Correct_Answer: 92, Score: 8870, Rate:0.887

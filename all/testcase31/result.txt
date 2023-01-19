@@ -1,2 +1,4 @@
 ins:10, sub:7, del:6
-Answered:100, Correct_Answer: 100, Score: 9575, Rate:0.958
+No.64 is uncorrect. (Your answer: 10, Correct answer: 6 Length: 32 Located from 630)
+No.86 is uncorrect. (Your answer: 20, Correct answer: 51 Length: 46 Located from 4576)
+Answered:100, Correct_Answer: 98, Score: 9380, Rate:0.938

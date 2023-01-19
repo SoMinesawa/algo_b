@@ -1,4 +1,6 @@
 ask from query_id = 1
+ask from query_id = 1
+ask from query_id = 5
 ask from query_id = 5
 ask from query_id = 8
 ask from query_id = 22
@@ -10,21 +12,24 @@ ask from query_id = 57
 ask from query_id = 62
 ask from query_id = 71
 ask from query_id = 72
+ask from query_id = 72
+ask from query_id = 72
+ask from query_id = 81
 ask from query_id = 81
 ask from query_id = 83
 	Command being timed: "./run_G2 all/testcase56/idata all/testcase56/out.txt all/testcase56/answer"
-	User time (seconds): 0.07
-	System time (seconds): 0.01
-	Percent of CPU this job got: 98%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.09
+	User time (seconds): 0.10
+	System time (seconds): 0.00
+	Percent of CPU this job got: 100%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.10
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 164144
+	Maximum resident set size (kbytes): 164148
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 8587
+	Minor (reclaiming a frame) page faults: 8592
 	Voluntary context switches: 1
 	Involuntary context switches: 0
 	Swaps: 0

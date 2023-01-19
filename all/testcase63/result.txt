@@ -1,4 +1,4 @@
 ins:3, sub:8, del:2
 No.42 is uncorrect. (Your answer: 100, Correct answer: 32 Length: 23 Located from 4557)
 No.61 is uncorrect. (Your answer: 91, Correct answer: 2 Length: 32 Located from 1535)
-Answered:100, Correct_Answer: 98, Score: 9615, Rate:0.962
+Answered:100, Correct_Answer: 98, Score: 9590, Rate:0.959

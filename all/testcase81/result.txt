@@ -1,3 +1,7 @@
 ins:10, sub:1, del:3
 No.5 is uncorrect. (Your answer: 68, Correct answer: 22 Length: 31 Located from 4884)
-Answered:100, Correct_Answer: 99, Score: 9700, Rate:0.970
+No.16 is uncorrect. (Your answer: 68, Correct answer: 62 Length: 27 Located from 4494)
+No.17 is uncorrect. (Your answer: 16, Correct answer: 46 Length: 26 Located from 1987)
+No.32 is uncorrect. (Your answer: 65, Correct answer: 61 Length: 26 Located from 4470)
+No.45 is uncorrect. (Your answer: 27, Correct answer: 53 Length: 25 Located from 1302)
+Answered:100, Correct_Answer: 95, Score: 9360, Rate:0.936

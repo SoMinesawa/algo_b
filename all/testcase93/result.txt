@@ -1,7 +1,7 @@
 ins:3, sub:5, del:9
-No.21 is uncorrect. (Your answer: 65, Correct answer: 66 Length: 28 Located from 2208)
+No.18 is uncorrect. (Your answer: 71, Correct answer: 9 Length: 28 Located from 4560)
 No.45 is uncorrect. (Your answer: 86, Correct answer: 76 Length: 23 Located from 3145)
+No.50 is uncorrect. (Your answer: 16, Correct answer: 42 Length: 32 Located from 4859)
 No.62 is uncorrect. (Your answer: 87, Correct answer: 42 Length: 20 Located from 31)
-No.91 is uncorrect. (Your answer: 90, Correct answer: 88 Length: 24 Located from 2796)
 No.99 is uncorrect. (Your answer: 70, Correct answer: 12 Length: 26 Located from 4567)
-Answered:100, Correct_Answer: 95, Score: 9185, Rate:0.918
+Answered:100, Correct_Answer: 95, Score: 9180, Rate:0.918

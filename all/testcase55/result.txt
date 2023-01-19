@@ -1,3 +1,2 @@
 ins:5, sub:8, del:1
-No.93 is uncorrect. (Your answer: 31, Correct answer: 4 Length: 21 Located from 1437)
-Answered:100, Correct_Answer: 99, Score: 9665, Rate:0.967
+Answered:100, Correct_Answer: 100, Score: 9750, Rate:0.975

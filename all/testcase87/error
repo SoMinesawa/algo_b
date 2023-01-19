@@ -2,23 +2,30 @@ ask from query_id = 3
 ask from query_id = 5
 ask from query_id = 11
 ask from query_id = 18
+ask from query_id = 18
 ask from query_id = 21
 ask from query_id = 22
 ask from query_id = 23
+ask from query_id = 23
 ask from query_id = 24
+ask from query_id = 25
+ask from query_id = 25
 ask from query_id = 25
 ask from query_id = 27
 ask from query_id = 29
-ask from query_id = 30
+ask from query_id = 29
 ask from query_id = 30
 ask from query_id = 32
+ask from query_id = 32
 ask from query_id = 39
+ask from query_id = 42
 ask from query_id = 42
 ask from query_id = 44
 ask from query_id = 45
 ask from query_id = 47
 ask from query_id = 51
 ask from query_id = 52
+ask from query_id = 54
 ask from query_id = 54
 ask from query_id = 56
 ask from query_id = 59
@@ -28,9 +35,6 @@ ask from query_id = 63
 ask from query_id = 64
 ask from query_id = 65
 ask from query_id = 67
-ask from query_id = 67
-ask from query_id = 67
-ask from query_id = 67
 ask from query_id = 68
 ask from query_id = 70
 ask from query_id = 72
@@ -39,30 +43,27 @@ ask from query_id = 84
 ask from query_id = 86
 ask from query_id = 87
 ask from query_id = 88
+ask from query_id = 88
+ask from query_id = 88
 ask from query_id = 89
 ask from query_id = 91
 ask from query_id = 92
-ask from query_id = 92
 ask from query_id = 93
-ask from query_id = 93
-ask from query_id = 99
-ask from query_id = 99
-ask from query_id = 99
 ask from query_id = 99
 ask from query_id = 99
 	Command being timed: "./run_G2 all/testcase87/idata all/testcase87/out.txt all/testcase87/answer"
-	User time (seconds): 0.09
+	User time (seconds): 0.15
 	System time (seconds): 0.00
-	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.10
+	Percent of CPU this job got: 100%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.15
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 66220
+	Maximum resident set size (kbytes): 66240
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 8588
+	Minor (reclaiming a frame) page faults: 8590
 	Voluntary context switches: 1
 	Involuntary context switches: 2
 	Swaps: 0

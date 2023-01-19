@@ -6,14 +6,20 @@ ask from query_id = 10
 ask from query_id = 11
 ask from query_id = 13
 ask from query_id = 14
+ask from query_id = 14
 ask from query_id = 16
 ask from query_id = 17
 ask from query_id = 18
+ask from query_id = 18
+ask from query_id = 20
 ask from query_id = 20
 ask from query_id = 23
 ask from query_id = 23
 ask from query_id = 23
 ask from query_id = 25
+ask from query_id = 26
+ask from query_id = 26
+ask from query_id = 26
 ask from query_id = 26
 ask from query_id = 27
 ask from query_id = 28
@@ -23,16 +29,17 @@ ask from query_id = 31
 ask from query_id = 31
 ask from query_id = 33
 ask from query_id = 34
+ask from query_id = 34
+ask from query_id = 34
 ask from query_id = 36
 ask from query_id = 38
+ask from query_id = 38
+ask from query_id = 38
 ask from query_id = 39
-ask from query_id = 40
 ask from query_id = 40
 ask from query_id = 45
 ask from query_id = 46
 ask from query_id = 51
-ask from query_id = 54
-ask from query_id = 54
 ask from query_id = 54
 ask from query_id = 54
 ask from query_id = 55
@@ -41,14 +48,11 @@ ask from query_id = 57
 ask from query_id = 58
 ask from query_id = 60
 ask from query_id = 62
-ask from query_id = 62
-ask from query_id = 62
 ask from query_id = 63
 ask from query_id = 65
 ask from query_id = 66
 ask from query_id = 67
 ask from query_id = 67
-ask from query_id = 68
 ask from query_id = 68
 ask from query_id = 69
 ask from query_id = 69
@@ -61,6 +65,7 @@ ask from query_id = 81
 ask from query_id = 82
 ask from query_id = 84
 ask from query_id = 85
+ask from query_id = 85
 ask from query_id = 88
 ask from query_id = 89
 ask from query_id = 89
@@ -68,21 +73,19 @@ ask from query_id = 90
 ask from query_id = 92
 ask from query_id = 95
 ask from query_id = 99
-ask from query_id = 99
-ask from query_id = 99
 	Command being timed: "./run_G2 all/testcase99/idata all/testcase99/out.txt all/testcase99/answer"
-	User time (seconds): 0.08
-	System time (seconds): 0.03
+	User time (seconds): 0.12
+	System time (seconds): 0.02
 	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.12
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.15
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 66216
+	Maximum resident set size (kbytes): 66184
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 8612
+	Minor (reclaiming a frame) page faults: 8616
 	Voluntary context switches: 1
 	Involuntary context switches: 0
 	Swaps: 0

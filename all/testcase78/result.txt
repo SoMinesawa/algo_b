@@ -1,4 +1,6 @@
 ins:9, sub:9, del:2
-No.14 is uncorrect. (Your answer: 75, Correct answer: 81 Length: 28 Located from 562)
+No.14 is uncorrect. (Your answer: 83, Correct answer: 81 Length: 28 Located from 562)
+No.32 is uncorrect. (Your answer: 96, Correct answer: 60 Length: 22 Located from 2775)
 No.60 is uncorrect. (Your answer: 10, Correct answer: 24 Length: 22 Located from 4348)
-Answered:100, Correct_Answer: 98, Score: 9395, Rate:0.940
+No.95 is uncorrect. (Your answer: 76, Correct answer: 64 Length: 35 Located from 4560)
+Answered:100, Correct_Answer: 96, Score: 9225, Rate:0.922

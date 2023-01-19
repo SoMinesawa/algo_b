@@ -1,2 +1,2 @@
 ins:10, sub:3, del:6
-Answered:100, Correct_Answer: 100, Score: 9815, Rate:0.982
+Answered:100, Correct_Answer: 100, Score: 9835, Rate:0.983

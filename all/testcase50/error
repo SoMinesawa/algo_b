@@ -1,7 +1,6 @@
 ask from query_id = 2
 ask from query_id = 3
 ask from query_id = 7
-ask from query_id = 7
 ask from query_id = 16
 ask from query_id = 17
 ask from query_id = 18
@@ -12,7 +11,9 @@ ask from query_id = 36
 ask from query_id = 38
 ask from query_id = 38
 ask from query_id = 42
+ask from query_id = 42
 ask from query_id = 47
+ask from query_id = 48
 ask from query_id = 48
 ask from query_id = 50
 ask from query_id = 53
@@ -22,30 +23,27 @@ ask from query_id = 61
 ask from query_id = 65
 ask from query_id = 68
 ask from query_id = 77
-ask from query_id = 77
-ask from query_id = 77
-ask from query_id = 77
-ask from query_id = 77
+ask from query_id = 78
+ask from query_id = 78
 ask from query_id = 78
 ask from query_id = 84
 ask from query_id = 87
 ask from query_id = 92
-ask from query_id = 92
 	Command being timed: "./run_G2 all/testcase50/idata all/testcase50/out.txt all/testcase50/answer"
-	User time (seconds): 0.07
-	System time (seconds): 0.01
-	Percent of CPU this job got: 98%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.09
+	User time (seconds): 0.09
+	System time (seconds): 0.00
+	Percent of CPU this job got: 99%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.10
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 164128
+	Maximum resident set size (kbytes): 164192
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 8611
+	Minor (reclaiming a frame) page faults: 8610
 	Voluntary context switches: 1
-	Involuntary context switches: 2
+	Involuntary context switches: 0
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 16

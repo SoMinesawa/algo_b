@@ -1,2 +1,3 @@
 ins:8, sub:8, del:3
-Answered:100, Correct_Answer: 100, Score: 9680, Rate:0.968
+No.66 is uncorrect. (Your answer: 56, Correct answer: 29 Length: 22 Located from 4469)
+Answered:100, Correct_Answer: 99, Score: 9640, Rate:0.964

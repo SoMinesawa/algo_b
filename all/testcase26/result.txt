@@ -1,2 +1,4 @@
 ins:10, sub:2, del:9
-Answered:100, Correct_Answer: 100, Score: 9775, Rate:0.978
+No.22 is uncorrect. (Your answer: 15, Correct answer: 18 Length: 23 Located from 4811)
+No.63 is uncorrect. (Your answer: 78, Correct answer: 5 Length: 21 Located from 2705)
+Answered:100, Correct_Answer: 98, Score: 9610, Rate:0.961

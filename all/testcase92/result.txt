@@ -1,3 +1,4 @@
 ins:2, sub:2, del:4
 No.73 is uncorrect. (Your answer: 42, Correct answer: 13 Length: 22 Located from 3626)
-Answered:100, Correct_Answer: 99, Score: 9840, Rate:0.984
+No.92 is uncorrect. (Your answer: 66, Correct answer: 92 Length: 21 Located from 572)
+Answered:100, Correct_Answer: 98, Score: 9750, Rate:0.975
