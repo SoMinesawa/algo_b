@@ -210,7 +210,7 @@ int search(char** S, char* q, int query_number, char* answer_filename, int ask_c
             free(sub_q);
         }
     }
-    if (ask_count < 2) {
+    if (ask_count < 0) {
         ask_count++;
         q = ask(query_number + 1, answer_filename);
         return search(S, q, query_number, answer_filename, ask_count);
