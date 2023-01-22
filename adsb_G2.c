@@ -4,6 +4,9 @@
 #include <stdint.h>
 #include "ask.h"
 
+#define MAX_l 10
+#define MIN_l 7
+
 int levenshtein_bitpal64(char* A, int m, char* B, int n) {
     uint64_t PMs[256] = {0};
     for(int i = 0; i < m; i++) {
@@ -104,27 +107,29 @@ int power(int x, int y) {
 }
 
 link NEW(Item item, link next) {
-    link x = malloc(sizeof *x);
+    link x = malloc(sizeof * x);
     x->item = item;
     x->next = next;
     return x;
 }
 
-link *heads, z;
-int l; //分割の長さ
-int M; // 配列のサイズ
+link** heads;
+link z;
 
 void STinit() {
-    M = power(4, l);
-    heads = malloc(M*sizeof(link));
+    heads = (link**)malloc(sizeof(link*) * MAX_l);
     z = NEW(NULLitem, NULL);
-    for (int i = 0; i < M; i++){
-        heads[i] = z;
+    for(int l = MIN_l; l <= MAX_l; l++) {
+        int M = power(4, l); // 配列のサイズ
+        heads[l] = (link*)malloc(M * sizeof(link));
+        for (int i = 0; i < M; i++){
+            heads[l][i] = z;
+        }
     }
 }
 
 // char*型の4進数をint型の10進数へ
-int hash(char* str) {
+int hash(int l, char* str) {
     int a = 0;
     for (int i = 0; i < l; i++) {
         a += (str[i] - '0') * power(4, l-i-1);
@@ -132,14 +137,14 @@ int hash(char* str) {
     return a;
 }
 
-void STinsert(char* str, int channel, int start) {
-    int i = hash(str);
+void STinsert(int l, char* str, int channel, int start) {
+    int i = hash(l, str);
     Item item = {channel, start};
-    heads[i] = NEW(item, heads[i]);
+    heads[l][i] = NEW(item, heads[l][i]);
 }
 
-link STsearch(char* v) {
-    return heads[hash(v)];
+link STsearch(int l, char* v) {
+    return heads[l][hash(l, v)];
 }
 
 char* scanf_from_file(FILE* file, int len) {
@@ -155,38 +160,37 @@ char* slice(char* str, int offset, int len) {
     return sub_str;
 }
 
-void insert(char* S, int ch) {
+void insert(int l, char* S, int ch) {
     for(int offset = 0; offset < DATA_LENGTH - l; offset++) {
-        STinsert(slice(S, offset, l), ch, offset);
+        STinsert(l, slice(S, offset, l), ch, offset);
     }
 }
 
-int search(char** S, char* q, int t, int query_number, char* answer_filename, int ask_count, int* previous_answers) {
+int search(char** S, char* q, int L, double a, int l) {
     link p;
     int edit_dis;
     int min_dis = 100;
-    int min_dis_channel = randint(1, N + 1);
-    int strlen_q = strlen(q);
-    for (int i = 0; i <= strlen_q - l; i++) {
+    int min_dis_channel = 0;
+    int t = a * L;
+    
+    for (int i = 0; i <= L - l; i++) {
         char* sub_q = slice(q, i, l); //クエリからl文字取り出す
-        p = STsearch(sub_q); //クエリから取り出したl文字を探索
-        // ハッシュ表にある完全一致した基地局データの部分列を順次クエリと同じ範囲に拡張し、
-        // クエリとの編集距離を算出して閾値と比較
+        p = STsearch(l, sub_q); //クエリから取り出したl文字を探索
         while(1) {
             if (p == z) {
-                break; //一致する部分列はもうない
+                break; // 一致する部分列はもうない
             }
             int offset = p->item.start - i;
-            if (offset + strlen_q <= DATA_LENGTH && offset >= 0) {
-                char* sub_s = slice(S[p->item.channel], offset, strlen(q));
+            if (offset + L <= DATA_LENGTH && offset >= 0) {
+                char* sub_s = slice(S[p->item.channel], offset, L);
 
                 // 位置を合わせた基地局データとクエリとの編集距離を算出
-                if (strlen_q < 65) {
-                    edit_dis = levenshtein_bitpal64(q, strlen_q, sub_s, strlen_q);
+                if (L < 65) {
+                    edit_dis = levenshtein_bitpal64(q, L, sub_s, L);
                 } else {
-                    edit_dis = levenshtein_bitpal128(q, strlen_q, sub_s, strlen_q);
+                    edit_dis = levenshtein_bitpal128(q, L, sub_s, L);
                 }
-                
+
                 free(sub_s);
                 if (edit_dis <= t) {
                     return p->item.channel + 1; // 編集距離が閾値以下であればそのときの基地局番号を答えとして返す
@@ -199,22 +203,9 @@ int search(char** S, char* q, int t, int query_number, char* answer_filename, in
         }
         free(sub_q);
     }
-    if (ask_count < 10) {
-        // 過去に同じ基地局がmin_dis_channelならそれを答えとする
-        for (int i = 0; i < ask_count; i++) {
-            if (previous_answers[i] == min_dis_channel) {
-                return min_dis_channel + 1;
-            }
-        }
-        previous_answers[ask_count] = min_dis_channel;
-        ask_count++;
-        q = ask(query_number + 1, answer_filename);
-        return search(S, q, t, query_number, answer_filename, ask_count, previous_answers);
-    } else {
-        // 編集距離が最小値の基地局番号を答えとして返す
-        printf("Return minmal distance channel\n");
-        return min_dis_channel + 1;
-    }
+    // 編集距離が最小値の基地局番号を答えとして返す
+    printf("Return minmal distance channel\n");
+    return min_dis_channel + 1;
 }
 
 int main(int argc, char* argv[]) {
@@ -230,14 +221,11 @@ int main(int argc, char* argv[]) {
 
     int p_ins, p_sub, p_del;
     fscanf(input_file, "%d %d %d", &p_ins, &p_sub, &p_del);
-    
-    // 1文字にエラーが生じない確率
-    double p_nerr = (100.0 - p_ins) * (100.0 - p_sub) *(100.0 - p_del) / 1000000;
 
-    double a; // 編集距離の閾値を決めるのに使う定数
+    double p_nerr = (100.0 - p_ins) * (100.0 - p_sub) * (100.0 - p_del) / 1000000;
 
-    // 編集距離の閾値はa*L
-    /** 文字列の分割の長さl*/
+    int l = 10;
+    double a = 0.25;
     if (p_nerr < 0.7786) {
         l = 8;
         a = 0.24;
@@ -266,12 +254,15 @@ int main(int argc, char* argv[]) {
 
     printf("Start costruct hashtable with chaining\n");
     STinit();
+    
     // 基地局のデータをlずつに分割して、それぞれ基地局番号と開始位置をハッシュ表に格納する
     // 基地局番号はここでは0〜99として後から+1する
     char** S = (char**)malloc(sizeof(char*) * N);
     for (int i = 0; i < N; i++) {
         S[i] = scanf_from_file(input_file, DATA_LENGTH + 1);
-        insert(S[i], i);
+        for(int l = MIN_l; l <= MAX_l; l++) {
+            insert(l, S[i], i);
+        }
     }
     printf("Finish costruct hashtable\n");
 
@@ -281,13 +272,9 @@ int main(int argc, char* argv[]) {
         // q = ask(i + 1, argv[3]); memo : how to call ask method
         printf("%d query:%s\n", i + 1, q);
 
-        int distance_threshold = (int)(a * strlen(q)); //編集距離の閾値
-
-        int previous_answers[10] = {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
-        int ans = search(S, q, distance_threshold, i, argv[3], 0, previous_answers);
-
-        printf("Ans:%d, distance_threshold:%d\n", ans, distance_threshold);
-
+        int L = strlen(q);
+        int previous_answers[10] = {-1};
+        int ans = search(S, q, L, a, l);
         fprintf(output_file, "%d\n", ans);
         free(q);
     }
@@ -300,6 +287,9 @@ int main(int argc, char* argv[]) {
         free(S[i]);
     }
     free(S);
+    for (int l = MIN_l; l <= MAX_l; l++) {
+        free(heads[l]);
+    }
     free(heads);
 
     /*
