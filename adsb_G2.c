@@ -1,95 +1,145 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdint.h>
 #include "ask.h"
 
-// ↓ 編集距離 参考: https://github.com/cubicdaiya/onp/tree/master/c
+int levenshtein_bitpal64(char* a, int len_a, char* b, int len_b) {
+    if (len_a > 64) {
+      return -1;
+    }
 
-/**
- * The algorithm implemented here is based on "An O(NP) Sequence Comparison Algorithm"
- * by described by Sun Wu, Udi Manber and Gene Myers
- */
+    uint64_t posbits[256] = {0};
 
-#ifndef ONP_H
-#define ONP_H
+    for (int i=0; i < len_a; i++){
+        posbits[(unsigned char)a[i]] |= 1ull << i;
+    }  
+    
+    int dist = len_a;
+    uint64_t mask = 1ull << (len_a - 1);
+    uint64_t VP = 0xffffffffffffffff >> (64 - len_a);
+    uint64_t VN   = 0;
 
-typedef unsigned int uint;
-typedef char onp_sequence_t;
-#define onp_swap(type, val, a, b) type val=a;a=b;b=val;
-#define onp_max(a, b) ((a) > (b) ? (a) : (b))
-#define onp_seq_len(seq) strlen(seq)
+    for (int i=0; i < len_b; i++){
+      uint64_t y = posbits[(unsigned char)b[i]];
+      uint64_t X  = y | VN; 
+      uint64_t D0 = ((VP + (X & VP)) ^ VP) | X;
+      uint64_t HN = VP & D0;
+      uint64_t HP = VN | ~(VP|D0);
+      X  = (HP << 1) | 1;
+      VN =  X & D0;
+      VP = (HN << 1) | ~(X | D0);
+      if (HP & mask) { dist++; }
+      if (HN & mask) { dist--; }
+    }
+    return dist; 
+}
+
 
 typedef struct {
-    onp_sequence_t *a;
-    onp_sequence_t *b;
-    uint m;
-    uint n;
-    int *path;
-    uint editdis;
-} onp_diff_t;
+    uint64_t high;
+    uint64_t low;
+} uint128_t;
 
-onp_diff_t *onp_alloc_diff (onp_sequence_t *a, onp_sequence_t *b);
-void onp_free_diff (onp_diff_t *diff);
-void onp_compose (onp_diff_t *diff);
-
-#endif // ONP_H
-
-static uint snake (onp_diff_t *diff, int k, int p, int pp);
-static uint snake (onp_diff_t *diff, int k, int p, int pp) {
-    int y = onp_max(p, pp);
-    int x = y - k;
-    while (x < diff->m && y < diff->n && diff->a[x] == diff->b[y]) {
-        ++x;
-        ++y;
+// 128ビット整数加算関数
+uint128_t add_uint128(uint128_t a, uint128_t b) {
+    uint128_t result;
+    result.low = a.low + b.low;
+    result.high = a.high + b.high;
+    if (result.low < a.low) {
+        result.high++;
     }
-    return y;
+    return result;
 }
 
-onp_diff_t *onp_alloc_diff (onp_sequence_t *a, onp_sequence_t *b) {
-    onp_diff_t *diff = (onp_diff_t *)malloc(sizeof(onp_diff_t));
-    diff->a = a;
-    diff->b = b;
-    diff->m = onp_seq_len(a);
-    diff->n = onp_seq_len(b);
-    if (diff->m > diff->n) {
-        onp_swap(onp_sequence_t*, seq_tmp, a, b);
-        onp_swap(int, int_tmp, diff->m, diff->n);
+// 128ビット整数論理積
+uint128_t and_uint128(uint128_t a, uint128_t b) {
+    uint128_t result;
+    result.high = a.high & b.high;
+    result.low = a.low & b.low;
+    return result;
+}
+
+// 128ビット整数論理和
+uint128_t or_uint128(uint128_t a, uint128_t b) {
+    uint128_t result;
+    result.high = a.high | b.high;
+    result.low = a.low | b.low;
+    return result;
+}
+
+// 128ビット整数反転
+uint128_t not_uint128(uint128_t a) {
+    uint128_t result;
+    result.high = ~a.high;
+    result.low = ~a.low;
+    return result;
+}
+
+// 128ビット整数排他的論理和
+uint128_t xor_uint128(uint128_t a, uint128_t b) {
+    uint128_t result;
+    result.high = a.high ^ b.high;
+    result.low = a.low ^ b.low;
+    return result;
+}
+
+// 128ビット整数左シフト
+uint128_t shl_uint128(uint128_t a, int b) {
+    uint128_t result;
+    if (b >= 64) {
+        result.high = a.low << (b - 64);
+        result.low = 0;
+    } else {
+        result.high = (a.high << b) | (a.low >> (64 - b));
+        result.low = a.low << b;
     }
-    diff->editdis = 0;
-    return diff;
+    return result;
 }
 
-void onp_free_diff (onp_diff_t *diff) {
-    free(diff->path);
-    free(diff);
-    diff = NULL;
+uint128_t shr_uint128(uint128_t x, int n) {
+  if (n >= 64) {
+    x.low = x.high >> (n - 64);
+    x.high = 0;
+  } else {
+    x.low = (x.high << (64 - n)) | (x.low >> n);
+    x.high >>= n;
+  }
+  return x;
 }
 
-void onp_compose (onp_diff_t *diff) {
-    int  p      = -1;
-    int  delta  = diff->n - diff->m;
-    uint offset = diff->m + 1;
-    uint size   = diff->m + diff->n + 3;
-    int *fp     = (int *)malloc(sizeof(int) * size);
-    diff->path  = (int *)malloc(sizeof(int) * size);
-    for (int i=0;i<size;++i) {
-        fp[i] = diff->path[i] = -1;
+// どこか間違ってる 実際の編集距離より1小さいものを返す場合がある
+int levenshtein_bitpal128(char* a, int len_a, char* b, int len_b) {
+    if (len_a > 128) {
+      return -1;
     }
-    do {
-        ++p;
-        for (int k=-p;k<=delta-1;++k) {
-            fp[k+offset] = snake(diff, k, fp[k-1+offset]+1, fp[k+1+offset]);
-        }
-        for (int k=delta+p;k>=delta+1;--k) {
-            fp[k+offset] = snake(diff, k, fp[k-1+offset]+1, fp[k+1+offset]);
-        }
-        fp[delta+offset] = snake(diff, delta, fp[delta-1+offset]+1,
-                                 fp[delta+1+offset]);
-    } while (fp[delta+offset] != diff->n);
-    diff->editdis = delta + 2 * p;
-    free(fp);
+    uint128_t one = {0, 1ull};
+    uint128_t max = {UINT64_MAX, UINT64_MAX};
+    uint128_t posbits[256] = {{0, 0}};
+    for (int i=0; i < len_a; i++){
+        posbits[(unsigned char)a[i]] = or_uint128(posbits[(unsigned char)a[i]], shl_uint128(one, i));
+    }  
+    int dist = len_a;
+    uint128_t mask = shl_uint128(one, len_a - 1);
+    uint128_t VP = shr_uint128(max, 128 - len_a);
+    uint128_t VN = {0, 0};
+    for (int i=0; i < len_b; i++){
+      uint128_t y = posbits[(unsigned char)b[i]]; 
+      uint128_t X = or_uint128(y, VN);
+      uint128_t D0 = or_uint128(xor_uint128(add_uint128(VP, and_uint128(X, VP)), VP), X);
+      uint128_t HN = and_uint128(VP, D0);
+      uint128_t HP = or_uint128(VN, not_uint128(or_uint128(VP, D0)));
+      X = or_uint128(shl_uint128(HP, 1), one);
+      VN = and_uint128(X, D0);
+      VP = or_uint128(shl_uint128(HN, 1), not_uint128(or_uint128(X, D0)));
+      uint128_t HP_and_mask = and_uint128(HP, mask);
+      if (HP_and_mask.high != 0 || HP_and_mask.low != 0) {dist++;}
+      uint128_t HN_and_mask = and_uint128(HN, mask);
+      if (HN_and_mask.high != 0 || HN_and_mask.low != 0) {dist--;}
+    }
+    return dist; 
 }
-// ↑ 編集距離
+
 
 typedef struct {
     int channel;
@@ -190,11 +240,12 @@ int search(char** S, char* q, int t, int query_number, char* answer_filename, in
                 char* sub_s = slice(S[p->item.channel], offset, strlen(q));
 
                 // 位置を合わせた基地局データとクエリとの編集距離を算出
-                onp_diff_t *diff = onp_alloc_diff(sub_s, q);
-                onp_compose(diff);
-                edit_dis = diff->editdis;
-                onp_free_diff(diff);
-
+                if (strlen_q < 65) {
+                    edit_dis = levenshtein_bitpal64(q, strlen_q, sub_s, strlen_q);
+                } else {
+                    edit_dis = levenshtein_bitpal128(q, strlen_q, sub_s, strlen_q);
+                }
+                
                 free(sub_s);
                 if (edit_dis <= t) {
                     return p->item.channel + 1; // 編集距離が閾値以下であればそのときの基地局番号を答えとして返す
@@ -247,29 +298,29 @@ int main(int argc, char* argv[]) {
     // 編集距離の閾値はa*L
     /** 文字列の分割の長さl*/
     if (p_nerr < 0.7786) {
-        l = 10;
-        a = 0.3;
-    } else if (p_nerr < 0.819) {
-        l = 10;
-        a = 0.29;
-    } else if (p_nerr < 0.8299) {
-        l = 10;
-        a = 0.28;
-    } else if (p_nerr < 0.8565) {
-        l = 11;
-        a = 0.27;
-    } else if (p_nerr < 0.88445) {
-        l = 11;
-        a = 0.26;
-    } else if (p_nerr < 0.8938) {
-        l = 12;
-        a = 0.25;
-    } else if (p_nerr < 0.9119) {
-        l = 12;
+        l = 8;
         a = 0.24;
-    } else {
-        l = 12;
+    } else if (p_nerr < 0.819) {
+        l = 8;
         a = 0.23;
+    } else if (p_nerr < 0.8299) {
+        l = 8;
+        a = 0.22;
+    } else if (p_nerr < 0.8565) {
+        l = 9;
+        a = 0.21;
+    } else if (p_nerr < 0.88445) {
+        l = 9;
+        a = 0.2;
+    } else if (p_nerr < 0.8938) {
+        l = 10;
+        a = 0.19;
+    } else if (p_nerr < 0.9119) {
+        l = 10;
+        a = 0.18;
+    } else {
+        l = 10;
+        a = 0.17;
     }
 
     printf("Start costruct hashtable with chaining\n");
