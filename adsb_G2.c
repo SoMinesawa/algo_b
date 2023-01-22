@@ -4,142 +4,83 @@
 #include <stdint.h>
 #include "ask.h"
 
-int levenshtein_bitpal64(char* a, int len_a, char* b, int len_b) {
-    if (len_a > 64) {
-      return -1;
+int levenshtein_bitpal64(char* A, int m, char* B, int n) {
+    uint64_t PMs[256] = {0};
+    for(int i = 0; i < m; i++) {
+        unsigned char c = A[i];
+        PMs[c] |= 1ull << i;
     }
-
-    uint64_t posbits[256] = {0};
-
-    for (int i=0; i < len_a; i++){
-        posbits[(unsigned char)a[i]] |= 1ull << i;
-    }  
-    
-    int dist = len_a;
-    uint64_t mask = 1ull << (len_a - 1);
-    uint64_t VP = 0xffffffffffffffff >> (64 - len_a);
-    uint64_t VN   = 0;
-
-    for (int i=0; i < len_b; i++){
-      uint64_t y = posbits[(unsigned char)b[i]];
-      uint64_t X  = y | VN; 
-      uint64_t D0 = ((VP + (X & VP)) ^ VP) | X;
-      uint64_t HN = VP & D0;
-      uint64_t HP = VN | ~(VP|D0);
-      X  = (HP << 1) | 1;
-      VN =  X & D0;
-      VP = (HN << 1) | ~(X | D0);
-      if (HP & mask) { dist++; }
-      if (HN & mask) { dist--; }
+    int D = m;
+    uint64_t D0, HP, HN, VP, VN;
+    uint64_t top = 1ull << (m - 1);
+    VP = ~0;
+    VN = 0;
+    for(int i = 0; i < n; i++) {
+        unsigned char c = B[i];
+        uint64_t PM = PMs[c];
+        D0 = (((PM & VP) + VP) ^ VP) | PM | VN;
+        HP = VN | ~(D0 | VP);
+        HN = D0 & VP;
+        if ((HP & top) != 0) {
+            ++D;
+        } else if ((HN & top) != 0) {
+            --D;
+        }
+        VP = (HN << 1) | ~(D0 | ((HP << 1) | 1));
+        VN = D0 & ((HP << 1) | 1);
     }
-    return dist; 
+    return D;
 }
 
-
-typedef struct {
-    uint64_t high;
-    uint64_t low;
-} uint128_t;
-
-// 128ビット整数加算関数
-uint128_t add_uint128(uint128_t a, uint128_t b) {
-    uint128_t result;
-    result.low = a.low + b.low;
-    result.high = a.high + b.high;
-    if (result.low < a.low) {
-        result.high++;
+int levenshtein_bitpal128(char* A, int m, char* B, int n) {
+    if(m > 128) {return -1;}
+    uint64_t PMl[256] = {0};
+    uint64_t PMh[256] = {0};
+    for (int i = 0; i < m; i++) {
+        unsigned char c = A[i];
+        if(i < 64) {
+            PMl[c] |= 1ull << i;				
+        } else {
+            PMh[c] |= 1ull << (i - 64);								
+        }
     }
-    return result;
-}
-
-// 128ビット整数論理積
-uint128_t and_uint128(uint128_t a, uint128_t b) {
-    uint128_t result;
-    result.high = a.high & b.high;
-    result.low = a.low & b.low;
-    return result;
-}
-
-// 128ビット整数論理和
-uint128_t or_uint128(uint128_t a, uint128_t b) {
-    uint128_t result;
-    result.high = a.high | b.high;
-    result.low = a.low | b.low;
-    return result;
-}
-
-// 128ビット整数反転
-uint128_t not_uint128(uint128_t a) {
-    uint128_t result;
-    result.high = ~a.high;
-    result.low = ~a.low;
-    return result;
-}
-
-// 128ビット整数排他的論理和
-uint128_t xor_uint128(uint128_t a, uint128_t b) {
-    uint128_t result;
-    result.high = a.high ^ b.high;
-    result.low = a.low ^ b.low;
-    return result;
-}
-
-// 128ビット整数左シフト
-uint128_t shl_uint128(uint128_t a, int b) {
-    uint128_t result;
-    if (b >= 64) {
-        result.high = a.low << (b - 64);
-        result.low = 0;
-    } else {
-        result.high = (a.high << b) | (a.low >> (64 - b));
-        result.low = a.low << b;
+    int D = m;
+    uint64_t D0, HP, HN, VP, VN;
+    uint64_t D0_h, HP_h, HN_h, VP_h, VN_h;
+    uint64_t top = 1ull << (m - 1);
+    if(m > 64) {
+        top = 1ull << (m - 65);
     }
-    return result;
-}
-
-uint128_t shr_uint128(uint128_t x, int n) {
-  if (n >= 64) {
-    x.low = x.high >> (n - 64);
-    x.high = 0;
-  } else {
-    x.low = (x.high << (64 - n)) | (x.low >> n);
-    x.high >>= n;
-  }
-  return x;
-}
-
-// どこか間違ってる 実際の編集距離より1小さいものを返す場合がある
-int levenshtein_bitpal128(char* a, int len_a, char* b, int len_b) {
-    if (len_a > 128) {
-      return -1;
+    VP = ~0; VN = 0;
+    VP_h = ~0; VN_h = 0;
+    for (int i = 0; i < n; i++) {
+        unsigned char c2 = B[i];
+        uint64_t PM = PMl[c2];
+        uint64_t PM_h = PMh[c2];
+        uint64_t x = (PM & VP); 
+        //check x + VP is overflow
+        //(cf. Hacker's Delight 2-12)
+        uint64_t carry = ((x & VP) | ((x | VP) & ~(x + VP))) >> 63;
+        D0 = ((x + VP) ^ VP) | PM | VN;
+        D0_h = (((PM_h & VP_h) + VP_h + carry) ^ VP_h) | PM_h | VN_h;
+        HP = VN | ~(D0 | VP);  HP_h = VN_h | ~(D0_h | VP_h);
+        HN = D0 & VP; HN_h = D0_h & VP_h;
+        if(m <= 64) {
+            if ((HP & top) != 0) {++D;}
+            else if ((HN & top) != 0) {--D;}				
+        }else {
+            if ((HP_h & top) != 0) {++D;}
+            else if ((HN_h & top) != 0) {--D;}	
+        }
+        uint64_t H_h = (HP_h << 1) | (HP >> 63);
+        uint64_t H2_h = (HN_h << 1) | (HN >> 63);
+        VP = (HN << 1) | ~(D0 | ((HP << 1) | 1ull));
+        VP_h = H2_h | ~(D0_h | H_h);
+        VN = D0 & ((HP << 1) | 1ull);
+        VN_h = D0_h & H_h;
     }
-    uint128_t one = {0, 1ull};
-    uint128_t max = {UINT64_MAX, UINT64_MAX};
-    uint128_t posbits[256] = {{0, 0}};
-    for (int i=0; i < len_a; i++){
-        posbits[(unsigned char)a[i]] = or_uint128(posbits[(unsigned char)a[i]], shl_uint128(one, i));
-    }  
-    int dist = len_a;
-    uint128_t mask = shl_uint128(one, len_a - 1);
-    uint128_t VP = shr_uint128(max, 128 - len_a);
-    uint128_t VN = {0, 0};
-    for (int i=0; i < len_b; i++){
-      uint128_t y = posbits[(unsigned char)b[i]]; 
-      uint128_t X = or_uint128(y, VN);
-      uint128_t D0 = or_uint128(xor_uint128(add_uint128(VP, and_uint128(X, VP)), VP), X);
-      uint128_t HN = and_uint128(VP, D0);
-      uint128_t HP = or_uint128(VN, not_uint128(or_uint128(VP, D0)));
-      X = or_uint128(shl_uint128(HP, 1), one);
-      VN = and_uint128(X, D0);
-      VP = or_uint128(shl_uint128(HN, 1), not_uint128(or_uint128(X, D0)));
-      uint128_t HP_and_mask = and_uint128(HP, mask);
-      if (HP_and_mask.high != 0 || HP_and_mask.low != 0) {dist++;}
-      uint128_t HN_and_mask = and_uint128(HN, mask);
-      if (HN_and_mask.high != 0 || HN_and_mask.low != 0) {dist--;}
-    }
-    return dist; 
+    return D;
 }
-
 
 typedef struct {
     int channel;
