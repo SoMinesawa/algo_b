@@ -24,22 +24,36 @@ int main (int argc, char *argv[]) {
 
         // コマンド
         char command[300];
-        sprintf(command, "/usr/bin/time -o info.txt -v ./%s %s out.txt %s 1> /dev/null 2> ask.txt", argv[1], idata_path, answer_path);
+        sprintf(command, "/usr/bin/time -v ./%s %s ./out.txt %s 1> /dev/null 2> stderr.txt", argv[1], idata_path, answer_path);
         system(command);
         
-        // info.txtからCPU時間とピークメモリを取得
-        FILE* info_file = fopen("info.txt", "r");
+        // stderr.txtから各クエリにおけるask回数とCPU時間とピークメモリを取得
+        FILE* stderr_file = fopen("stderr.txt", "r");
+        printf("ok\n");
+        int ask[100] = {0};
+        int ask_query_number;
+        while (fscanf(stderr_file, "ask from query_id = %d\n", &ask_query_number) != 0) {
+            printf("ok\n");
+            ask[ask_query_number - 1]++;
+        }
+        printf("ok\n");
+
         char tmp[200];
-        fgets(tmp, 200, info_file);
+        fgets(tmp, 200, stderr_file);
         double usr_time;
-        fscanf(info_file, "\tUser time (seconds): %lf\n", &usr_time);
+        fscanf(stderr_file, "\tUser time (seconds): %lf\n", &usr_time);
+        printf("ok\n");
+
         double sys_time;
-        fscanf(info_file, "\tSystem time (seconds): %lf\n", &sys_time);
+        fscanf(stderr_file, "\tSystem time (seconds): %lf\n", &sys_time);
         double cpu_time = usr_time + sys_time;
-        for (int i = 0; i < 6; i++) { fgets(tmp, 200, info_file);}
+        for (int i = 0; i < 6; i++) { fgets(tmp, 200, stderr_file);}
+        printf("ok\n");
+
         int mrss;
-        fscanf(info_file, "\tMaximum resident set size (kbytes): %d\n", &mrss);
-        fclose(info_file);
+        fscanf(stderr_file, "\tMaximum resident set size (kbytes): %d\n", &mrss);
+        fclose(stderr_file);
+        printf("ok\n");
 
         // out.txtから回答を取得
         int out[100] = {-1};
@@ -58,15 +72,7 @@ int main (int argc, char *argv[]) {
         }
         fclose(answer_file);
 
-        // ask.txtから各クエリにおけるask回数を取得
-        int ask[100] = {0};
-        int ask_query_number;
-        FILE* ask_file = fopen("ask.txt", "r");
-        while (fscanf(ask_file, "ask from query_id = %d\n", &ask_query_number) != EOF) {
-            ask[ask_query_number - 1]++;
-        }
-        fclose(ask_file);
-
+        // 確認
         for (int i = 0; i < 100; i++) {
             printf("%d,%d,%d\n", out[i], answer[i], ask[i]);
         }
