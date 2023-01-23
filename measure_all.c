@@ -67,10 +67,6 @@ int main (int argc, char *argv[]) {
         }
         fclose(ask_file);
 
-        for (int i = 0; i < 100; i++) {
-            printf("%d,%d,%d\n", out[i], answer[i], ask[i]);
-        }
-
         // 採点
         int score = 0;
         int count_correct = 0;
