@@ -95,12 +95,29 @@ struct STnode {
     link next;
 };
 
-int power(int x, int y) {
-    int a = 1;
-    for(int i = 0; i < y; i++) {
-        a = a * x;
+int get_msb(unsigned int n)
+{
+  int i = 0;
+
+  while (n > 0) {
+    n >>= 1;
+    i++;
+  }
+  /* return -1 if a == 0. */
+  return i - 1;
+}
+
+unsigned int power(unsigned int a, unsigned int n)
+{
+  unsigned int x = 1;
+  int i;
+  for (i = get_msb(n); i >= 0; i--) {
+    x *= x;
+    if ((n >> i) & 1) {
+      x *= a;
     }
-    return a;
+  }
+  return x;
 }
 
 link NEW(Item item, link next) {
@@ -167,6 +184,7 @@ int search(char** S, char* q, int t, int query_number, char* answer_filename, in
     int min_dis = 100;
     int min_dis_channel = randint(1, N + 1);
     int strlen_q = strlen(q);
+
     for (int i = 0; i <= strlen_q - l; i++) {
         char* sub_q = slice(q, i, l); //クエリからl文字取り出す
         p = STsearch(sub_q); //クエリから取り出したl文字を探索
@@ -186,10 +204,11 @@ int search(char** S, char* q, int t, int query_number, char* answer_filename, in
                 } else {
                     edit_dis = levenshtein_bitpal128(q, strlen_q, sub_s, strlen_q);
                 }
-                
+
                 free(sub_s);
                 if (edit_dis <= t) {
-                    return p->item.channel + 1; // 編集距離が閾値以下であればそのときの基地局番号を答えとして返す
+                    // 編集距離が閾値以下であればそのときの基地局番号を答えとして返す
+                    return p->item.channel + 1;
                 } else if (min_dis > edit_dis){
                     min_dis = edit_dis; // 編集距離の最小値
                     min_dis_channel = p->item.channel; //編集距離が最小値の基地局番号
@@ -199,6 +218,7 @@ int search(char** S, char* q, int t, int query_number, char* answer_filename, in
         }
         free(sub_q);
     }
+
     if (ask_count < 10) {
         // 過去に同じ基地局がmin_dis_channelならそれを答えとする
         for (int i = 0; i < ask_count; i++) {
@@ -263,6 +283,13 @@ int main(int argc, char* argv[]) {
         l = 10;
         a = 0.17;
     }
+
+    /*
+    if (p_nerr < 0.7695) {l = 7;}
+    else if (p_nerr < 0.7938) {l = 8;}
+    else if (p_nerr < 0.81972) {l = 9;}
+    else {l = 10;}
+    */
 
     printf("Start costruct hashtable with chaining\n");
     STinit();
