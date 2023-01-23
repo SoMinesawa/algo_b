@@ -42,10 +42,17 @@ int main (int argc, char *argv[]) {
         fclose(info_file);
 
         // out.txtから回答を取得
-        int out[100] = {-1};
+        int out[100] = {0};
         FILE* output_file = fopen("out.txt", "r");
-        for (int i = 0; i < 100; i++) {
+        int i;
+        int check_zero = 0;
+        for (i = 0; i < 100; i++) {
             fscanf(output_file, "%d\n", &out[i]);
+            check_zero += out[i];
+        }
+        if(check_zero == 0) {
+            printf("out.txtに回答が書き込まれていません\n");
+            break;
         }
         fclose(output_file);
 
