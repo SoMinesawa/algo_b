@@ -10,11 +10,11 @@ touch tuning_chain.csv
 echo "p_ins,p_sub,p_del,p_nerr,l,a,score,time" >> tuning_chain.csv
 
 gcc -g -lm sample/tuning_chain.c -o tuning_chain -O2 -Wall
-for ((p_ins=1; p_ins<=9; p_ins++))
+for ((p_ins=0; p_ins<=9; p_ins++))
 do
-for ((p_sub=1; p_sub<=9; p_sub++))
+for ((p_sub=0; p_sub<=9; p_sub++))
 do
-for ((p_del=1; p_del<=9; p_del++))
+for ((p_del=0; p_del<=9; p_del++))
 do
     echo "$p_ins" "$p_sub" "$p_del"
 for ((l=11; l>=7; l--))

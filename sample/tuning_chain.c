@@ -200,6 +200,11 @@ int test(double a, double p_nerr, char* argv1, char* argv3) {
     return score;
 }
 
+int convert(int p) {
+    if (p == 0) return 10;
+    return p;
+}
+
 int main(int argc, char* argv[]) {
     srand((unsigned int)time(NULL));
     unsigned int sec;
@@ -216,12 +221,15 @@ int main(int argc, char* argv[]) {
     l = atoi(argv[6]);
     double a = atof(argv[7]);
 
+    sprintf(input_path, "%s/idata_%d%d%d", argv[1], p_ins, p_sub, p_del);
+    sprintf(answer_path, "%s/answer_%d%d%d", argv[1], p_ins, p_sub, p_del);
+
+    p_ins = convert(p_ins);
+    p_sub = convert(p_sub);
+    p_del = convert(p_del);
     // 1文字にエラーが生じる確率
     double p_nerr =
         (100.0 - p_ins) * (100.0 - p_sub) * (100.0 - p_del) / 1000000;
-
-    sprintf(input_path, "%s/idata_%d%d%d", argv[1], p_ins, p_sub, p_del);
-    sprintf(answer_path, "%s/answer_%d%d%d", argv[1], p_ins, p_sub, p_del);
 
     clock_gettime(CLOCK_REALTIME, &start_time);
     int score = test(a, p_nerr, input_path, answer_path);

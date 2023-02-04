@@ -54,6 +54,7 @@ dkms.conf
 # Data
 data
 *.csv
+all/testcases/all
 
 # Temporary
 tmp*
@@ -64,3 +65,5 @@ info.txt
 tuning_Btree
 adsb_G2
 tuning_chain
+measure_all
+tuning_onp
